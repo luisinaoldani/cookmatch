@@ -4,10 +4,10 @@
 
 ## Grupo
 ### Integrantes
-* legajo - Baras, Candela
+* 54432 - Baras, Candela
 * 53999 - Oldani, Luisina María
-* legajo - Panto, Martina
-* legajo - Rodriguez, Martina
+* 53637 - Panto, Martina
+* 52431 - Rodriguez, Martina
 
 ### Repositorios
 * [frontend app](link)
