@@ -33,7 +33,8 @@ Regularidad:
 |Listado<br>+<br>detalle|  |
 |CUU/Epic| |
 
-Adicionales para Aprobación
+
+Adicionales para Aprobación:
 |Req|Detalle|
 |:-|:-|
 |CRUD | |
