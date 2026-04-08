@@ -16,8 +16,7 @@
 ## Tema
 
 ### Descripción
-CookMatch es una aplicación web que permite encontrar recetas en función de los ingredientes que tienen disponibles en su hogar. Se podrán cargar ingredientes y el sistema mostrará recetas compatibles. Además, será posible ver recetas ofrecidas por la aplicación eligiendo el tipo de receta (vegetariana o con carne). Permitirá, también, guardar recetas favoritas y compartir comentarios sobre las mismas. 
-El sistema busca facilitar la planificación de comidas y reducir el desperdicio de alimentos, brindando sugerencias personalizadas.
+CookMatch es una aplicación web que permite encontrar recetas en función de los ingredientes que tienen disponibles en su hogar. Se podrán cargar ingredientes y el sistema mostrará recetas compatibles. Además, será posible ver recetas ofrecidas por la aplicación eligiendo su características. Permitirá, también, guardar recetas favoritas y compartir comentarios sobre las mismas. El sistema busca facilitar la planificación de comidas y reducir el desperdicio de alimentos, brindando sugerencias personalizadas.
 
 ### Modelo
 
@@ -28,8 +27,8 @@ El sistema busca facilitar la planificación de comidas y reducir el desperdicio
 Regularidad:
 |Req|Detalle|
 |:-|:-|
-|CRUD simple| |
-|CRUD dependiente| |
+|CRUD simple| 1. CRUD Receta<br>2. CRUD Ingrediente<br>3. CRUD Categoría<br>4.|
+|CRUD dependiente| 1. CRUD Comentario {depende de} CRUD Receta<br>2. CRUD Paso {depende de} CRUD Receta<br>3. CRUD Favorito{depende de} CRUD Receta |
 |Listado<br>+<br>detalle|  |
 |CUU/Epic| |
 
