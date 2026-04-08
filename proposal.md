@@ -40,7 +40,7 @@ Adicionales para Aprobación:
 |CRUD | |
 |CUU/Epic| |
 
-### Alcance adicional voluntario
+### Alcance Adicional Voluntario
 |Req|Detalle|
 |:-|:-|
 |Listados | |
