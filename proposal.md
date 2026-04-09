@@ -37,4 +37,4 @@ Adicionales para Aprobación:
 |Req|Detalle|
 |:-|:-|
 |CRUD | 1. CRUD Usuario |
-|CUU/Epic|  |
+|CUU/Epic| 1- EPIC Sistema clasifica recetas según dificultad<br>2- CUU Usuario busca recetas según grado de dificultad<br>3-Epic Sistema ordena recetas según calificación<br>4- Epic Moderador elimina recetas duplicadas|
