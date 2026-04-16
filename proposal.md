@@ -28,14 +28,14 @@ CookMatch es una aplicación web que permite encontrar recetas en función de lo
 Regularidad:
 |Req|Detalle|
 |:-|:-|
-|CRUD simple| 1. CRUD Ingrediente<br>2. CRUD Utensilio<br>3. CRUD Etiqueta<br>4. CRUD Tipo_Restriccion |
-|CRUD dependiente| 1. CRUD Receta_Ingrediente {depende de} CRUD Receta e CRUD Ingrediente<br>2. CRUD Paso {depende de} CRUD Receta<br>3. CRUD Restriccion_Alimentaria {depende de} CRUD Tipo_Restriccion |
+|CRUD simple| 1. CRUD Ingrediente<br>2. CRUD Utensilio<br>3. CRUD Etiqueta<br>4. CRUD Tipo_restriccion |
+|CRUD dependiente| 1. CRUD Receta {depende de} CRUD Ingrediente, CRUD Utensilio y CRUD Etiqueta<br>2. CRUD Receta_Ingrediente {depende de} CRUD Receta y CRUD Ingrediente<br>2. CRUD Paso {depende de} CRUD Receta<br>3. CRUD Restriccion_alimentaria {depende de} CRUD Tipo_Restriccion |
 |Listado<br>+<br>detalle| 1. Listado de restricciones alimentarias filtrado por tipo de restricción => Detalle muestra información completa de las restricciones<br>2. Listado de recetas filtrado por etiquetas => Detalle muestra información completa de la receta incluyendo ingredientes, pasos utensilios y etiquetas |
-|CUU/Epic| 1. CUU Usuario busca receta a partir de ingredientes disponibles<br>2. CUU Usuario  |
+|CUU/Epic| 1. CUU Usuario busca receta a partir de ingredientes disponibles<br>2. CUU Usuario consulta planificacion de comidas para su semana |
 
 
 Adicionales para Aprobación:
 |Req|Detalle|
 |:-|:-|
-| CRUD | 1. CRUD Ingrediente<br>2. CRUD Utensilio<br>3. CRUD Etiqueta<br>4. CRUD Tipo_Restriccion 5. CRUD Usuario<br>6. CRUD Puntaje |
-|CUU/Epic| 1. CUU Usuario califica receta<br>2. CUU Usuario busca recetas según puntuación<br>3. Epic Sistema ordena recetas según grado de dificultad<br>4. Epic Moderador elimina recetas duplicadas|
+| CRUD | 1. CRUD Receta<br>2. CRUD Ingrediente<br>3. CRUD Ingrediente_receta<br>4. CRUD Utensilio 5. CRUD Etiqueta<br>6. CRUD Tipo_restriccion<br>7. CRUD Restriccion_alimentaria<br>8. CRUD Usuario<br>9. CRUD Puntaje |
+|CUU/Epic| 1. CUU Usuario califica receta<br>2. CUU Usuario busca recetas según puntaje<br>3. Epic Sistema ordena recetas según grado de dificultad<br>4. Epic Moderador elimina recetas duplicadas |
