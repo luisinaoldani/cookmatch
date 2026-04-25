@@ -6,7 +6,7 @@
 ### Integrantes
 * 54432 - Baras, Candela
 * 53999 - Oldani, Luisina María
-* 53637 - Panto, Martina
+* 53673 - Panto, Martina
 * 52431 - Rodriguez, Martina
 
 ### Repositorios
