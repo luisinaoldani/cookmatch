@@ -38,4 +38,5 @@ Adicionales para Aprobación:
 |Req|Detalle|
 |:-|:-|
 | CRUD | 1. CRUD Receta<br>2. CRUD Ingrediente<br>3. CRUD Receta_ingrediente<br>4. CRUD Utensilio<br>5. CRUD Etiqueta<br>6. CRUD Paso<br>7. CRUD Tipo_restriccion<br>8. CRUD Restriccion_alimentaria<br>9. CRUD Usuario<br>10. CRUD Puntaje |
+| Listados |  |
 |CUU/Epic| 1. CUU Usuario califica receta<br>2. CUU Usuario busca recetas según puntaje<br>3. Epic Sistema ordena recetas según grado de dificultad<br>4. Epic Moderador elimina recetas duplicadas |
