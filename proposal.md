@@ -28,7 +28,7 @@ CookMatch es una aplicación web que permite encontrar recetas en función de lo
 Regularidad:
 |Req|Detalle|
 |:-|:-|
-|CRUD simple| 1. CRUD Ingrediente<br>2. CRUD Utensilio<br>3. CRUD Etiqueta<br>4. CRUD Tipo_restriccion |
+|CRUD simple| 1. CRUD Ingrediente<br>2. CRUD Utensilio<br>3. CRUD Etiqueta<br>4. CRUD Tipo_restriccion<br>5. CRUD Receta |
 |CRUD dependiente| 1. CRUD Receta_Ingrediente {depende de} CRUD Receta y CRUD Ingrediente<br>2. CRUD Paso {depende de} CRUD Receta<br>3. CRUD Restriccion_alimentaria {depende de} CRUD Tipo_restriccion |
 |Listado<br>+<br>detalle| 1. Listado de recetas según ingredientes ingresados => Detalle muestra información completa de las  receta incluyendo ingredientes, pasos utensilios y etiquetas<br>2. Listado de restricciones alimentarias filtrado por tipo de restricción => Detalle muestra información completa de las restricciones<br>3. Listado de recetas filtrado por etiquetas => Detalle muestra información completa de la receta incluyendo ingredientes, pasos utensilios y etiquetas |
 |CUU/Epic| 1. CUU Usuario crea una receta<br>2. CUU Usuario crea planificacion de comidas para su semana |
