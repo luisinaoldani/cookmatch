@@ -8,7 +8,7 @@ app.use(express.json());
 
 // test con ruta de prueba: 
 app.get('/', (req, res) => {
-  res.json({ mensaje: '¡El servidor de CookMatch está funcionando perfectamente!' });
+  res.json({ mensaje: 'El servidor está funcionando correctamente' });
 });
 
 app.listen(PORT, () => {
