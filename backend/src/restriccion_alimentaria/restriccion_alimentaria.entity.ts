@@ -1,19 +1,18 @@
-// RestriccionAlimentaria tampoco tiene id propio: se identifica por la
-// combinación de codigoTipo (a qué TipoRestriccion pertenece) + nombre.
-// "descripcion" es opcional porque en la tabla permite NULL.
+import type { TipoRestriccion } from '../tipo_restriccion/tipo_restriccion.entity.js';
+
 export interface RestriccionAlimentariaProps {
-  codigoTipo: number;
+  tipoRestriccion: TipoRestriccion;
   nombre: string;
   descripcion?: string;
 }
 
 export class RestriccionAlimentaria {
-  codigoTipo: number;
-  nombre: string;
+  tipoRestriccion!: TipoRestriccion;
+  nombre!: string;
   descripcion?: string;
 
-  constructor({ codigoTipo, nombre, descripcion }: RestriccionAlimentariaProps) {
-    this.codigoTipo = codigoTipo;
+  constructor({ tipoRestriccion, nombre, descripcion }: RestriccionAlimentariaProps) {
+    this.tipoRestriccion = tipoRestriccion;
     this.nombre = nombre;
     this.descripcion = descripcion;
   }

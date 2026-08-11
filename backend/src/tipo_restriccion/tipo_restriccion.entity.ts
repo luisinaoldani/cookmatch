@@ -1,17 +1,19 @@
-// 1. Definimos la interfaz para los parámetros del constructor
+import type { RestriccionAlimentaria } from '../restriccion_alimentaria/restriccion_alimentaria.entity.js';
+
 export interface TipoRestriccionProps {
   id?: number;
   tipo: string;
+  restricciones?: RestriccionAlimentaria[];
 }
 
 export class TipoRestriccion {
-// 2. Declaramos las propiedades y sus tipos en la clase
   id?: number;
   tipo!: string;
-  
-// 3. Asignamos la interfaz al objeto destructurado del constructor
-  constructor({ id, tipo }: TipoRestriccionProps) {
+  restricciones!: RestriccionAlimentaria[];
+
+  constructor({ id, tipo, restricciones }: TipoRestriccionProps) {
     this.id = id;
     this.tipo = tipo;
+    this.restricciones = restricciones ?? [];
   }
 }
