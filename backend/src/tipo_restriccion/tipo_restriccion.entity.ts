@@ -2,14 +2,14 @@ import type { RestriccionAlimentaria } from '../restriccion_alimentaria/restricc
 
 export interface TipoRestriccionProps {
   id?: number;
-  tipo: string;
+  tipo?: string;
   restricciones?: RestriccionAlimentaria[];
 }
 
 export class TipoRestriccion {
   id?: number;
-  tipo!: string;
-  restricciones!: RestriccionAlimentaria[];
+  tipo?: string;
+  restricciones?: RestriccionAlimentaria[];
 
   constructor({ id, tipo, restricciones }: TipoRestriccionProps) {
     this.id = id;
