@@ -1,6 +1,5 @@
 @import "tailwindcss";
 
-
 :root {
   --text: #6b6375;
   --text-h: #08060d;
@@ -111,4 +110,25 @@ code {
   line-height: 135%;
   padding: 4px 8px;
   background: var(--code-bg);
+}
+
+
+@theme {
+  --color-paper: #FAFAF7;
+  --color-ink: #1B1B16;
+  --color-basil: #2F5233;
+  --color-basil-dark: #1F3A24;
+  --color-yolk: #F2A93B;
+  --color-tomato: #D6472B;
+  --color-surface: #F1ECDD;
+
+  --font-display: "Space Grotesk", sans-serif;
+  --font-body: "Inter", sans-serif;
+  --font-mono: "IBM Plex Mono", monospace;
+}
+
+body {
+  background-color: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-body);
 }
