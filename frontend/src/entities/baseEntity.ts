@@ -1,4 +1,4 @@
-export abstract class BaseEntity {
-  id!: number;
-  codigo!: string;
+export abstract class baseEntity {
+  id?: number;
+  codigo?: string;
 }
