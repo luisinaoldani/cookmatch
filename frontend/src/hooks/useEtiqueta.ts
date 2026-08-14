@@ -7,7 +7,7 @@ export function useEtiquetas() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const upload = async () => {
+  const upload = async () => { //hace 3 cosas en orden, prende el loading, pide los datos, los guarda en el estado, y al final apaga el loading con finally
     try {
       setLoading(true);
       const data = await getEtiquetas();
@@ -23,5 +23,5 @@ export function useEtiquetas() {
     upload();
   }, []);
 
-  return { etiquetas, loading, error, recargar: upload };
+  return { etiquetas, loading, error, reload: upload };
 }
