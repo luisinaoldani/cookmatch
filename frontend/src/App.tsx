@@ -1,7 +1,8 @@
-import './styles/App.css';
+import './App.css';
+import EtiquetaList from './components/etiqueta/etiquetaList';
 
 function App() {
-  return null;
+  return <EtiquetaList />;
 }
 
 export default App;
