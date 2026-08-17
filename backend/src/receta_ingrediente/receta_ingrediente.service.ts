@@ -17,13 +17,13 @@ export class RecetaIngredienteService {
   }
 
   async create(data: {
-    idReceta?: number;
+    receta?: any;
     ingrediente?: any;
     cantidad?: number;
     unidadMedida?: string;
   }): Promise<RecetaIngrediente> {
-    if (data.idReceta === undefined || Number(data.idReceta) <= 0) {
-      throw new Error('El idReceta es obligatorio');
+    if (data.receta === undefined || !data.receta.id) {
+      throw new Error('Debe enviarse una receta válida');
     }
     if (!data.ingrediente || !data.ingrediente.id) {
       throw new Error('Debe enviarse un ingrediente válido');
@@ -36,7 +36,7 @@ export class RecetaIngredienteService {
     }
 
     const nuevoItem = new RecetaIngrediente({
-      idReceta: Number(data.idReceta),
+      receta: data.receta,
       ingrediente: data.ingrediente,
       cantidad: Number(data.cantidad),
       unidadMedida: data.unidadMedida.trim(),
@@ -46,6 +46,7 @@ export class RecetaIngredienteService {
   }
 
   async update(idReceta: number, idIngrediente: number, data: {
+    receta?: any;
     ingrediente?: any;
     cantidad?: number;
     unidadMedida?: string;
@@ -66,7 +67,7 @@ export class RecetaIngredienteService {
     }
 
     const actualizada = new RecetaIngrediente({
-      idReceta,
+      receta: data.receta,
       ingrediente: data.ingrediente,
       cantidad: Number(data.cantidad),
       unidadMedida: data.unidadMedida.trim(),

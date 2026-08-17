@@ -1,22 +1,34 @@
+import { orm } from '../shared/database/db.js';
 import { Ingrediente } from './ingrediente.entity.js';
+
 export class IngredienteRepository {
   async findAll(): Promise<Ingrediente[]> {
-    throw new Error('Pendiente: implementar cuando tengamos la conexión a la base de datos');
+    return orm.em.findAll(Ingrediente);
   }
 
   async findById(id: number): Promise<Ingrediente | null> {
-    throw new Error('Pendiente: implementar cuando tengamos la conexión a la base de datos');
+    return orm.em.findOne(Ingrediente, { id });
   }
 
-  async create(ingrediente: Ingrediente): Promise<Ingrediente> {
-    throw new Error('Pendiente: implementar cuando tengamos la conexión a la base de datos');
+  async create(entidad: Ingrediente): Promise<Ingrediente> {
+    const nueva = orm.em.create(Ingrediente, { nombre: entidad.nombre });
+    await orm.em.flush();
+    return nueva;
   }
 
-  async update(id: number, ingrediente: Ingrediente): Promise<boolean> {
-    throw new Error('Pendiente: implementar cuando tengamos la conexión a la base de datos');
+  async update(id: number, entidad: Ingrediente): Promise<boolean> {
+    const existente = await orm.em.findOne(Ingrediente, { id });
+    if (!existente) return false;
+    existente.nombre = entidad.nombre;
+    await orm.em.flush();
+    return true;
   }
 
   async delete(id: number): Promise<boolean> {
-    throw new Error('Pendiente: implementar cuando tengamos la conexión a la base de datos');
+    const existente = await orm.em.findOne(Ingrediente, { id });
+    if (!existente) return false;
+    orm.em.remove(existente);
+    await orm.em.flush();
+    return true;
   }
 }

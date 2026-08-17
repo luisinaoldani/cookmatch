@@ -32,7 +32,7 @@ export class UtensilioService {
     if (!existente) {
       throw new Error('Utensilio no encontrado');
     }
-    const actualizada = new Utensilio({ id, nombre: data.nombre.trim() });
+    const actualizada = new Utensilio({ nombre: data.nombre.trim() });
     await repository.update(id, actualizada);
     return actualizada;
   }

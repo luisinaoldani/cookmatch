@@ -1,27 +1,35 @@
+import { Entity, ManyToOne, Property } from '@mikro-orm/decorators/es';
 import type { Ingrediente } from '../ingrediente/ingrediente.entity.js';
+import type { Receta } from '../receta/receta.entity.js';
 
-// RecetaIngrediente es la tabla intermedia entre Receta e Ingrediente.
-// Guardamos el Ingrediente COMPLETO (no solo su código) porque cuando se
-// muestra el detalle de una receta se necesita el nombre del ingrediente,
-// no solo su id. idReceta se deja como número (no como objeto Receta
-// completo) para evitar una referencia circular entre las dos entidades.
 export interface RecetaIngredienteProps {
-  idReceta: number;
+  receta: Receta;
   ingrediente: Ingrediente;
   cantidad: number;
   unidadMedida: string;
 }
 
+@Entity()
 export class RecetaIngrediente {
-  idReceta!: number;
+
+  @ManyToOne({ primary: true, fieldName: 'idReceta', deleteRule: 'cascade', updateRule: 'cascade' })
+  receta!: Receta;
+
+  @ManyToOne({ primary: true, fieldName: 'idIngrediente', deleteRule: 'cascade', updateRule: 'cascade' })
   ingrediente!: Ingrediente;
+
+  @Property({ columnType: 'double unsigned' })
   cantidad!: number;
+
+  @Property({ length: 100, fieldName: 'unidadMedida' })
   unidadMedida!: string;
 
-  constructor({ idReceta, ingrediente, cantidad, unidadMedida }: RecetaIngredienteProps) {
-    this.idReceta = idReceta;
-    this.ingrediente = ingrediente;
-    this.cantidad = cantidad;
-    this.unidadMedida = unidadMedida;
+  constructor(props?: RecetaIngredienteProps) {
+    if (props) {
+      this.receta = props.receta;
+      this.ingrediente = props.ingrediente;
+      this.cantidad = props.cantidad;
+      this.unidadMedida = props.unidadMedida;
+    }
   }
 }

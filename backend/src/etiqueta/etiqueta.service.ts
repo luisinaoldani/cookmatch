@@ -34,7 +34,7 @@ export class EtiquetaService {
     if (!existente) {
       throw new Error('Etiqueta no encontrada');
     }
-    const actualizada = new Etiqueta({ id, nombre: data.nombre.trim() });
+    const actualizada = new Etiqueta({ nombre: data.nombre.trim() });
     await repository.update(id, actualizada);
     return actualizada;
   }

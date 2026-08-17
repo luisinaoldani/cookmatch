@@ -1,17 +1,22 @@
-// 1. Definimos la interfaz para los parámetros del constructor
+import { Entity, PrimaryKey, Property } from '@mikro-orm/decorators/es';
+
+// La interfaz y el constructor no incluyen el id
+// porque este se genera automáticamente al persistir la entidad
 export interface EtiquetaProps {
-  id?: number; // El '?' indica que es opcional (ideal para cuando se crea uno nuevo y la BD aún no le asignó ID)
   nombre: string;
 }
 
+@Entity()
 export class Etiqueta {
-  // 2. Declaramos las propiedades y sus tipos en la clase
-  id?: number;
-  nombre: string;
+  @PrimaryKey()
+  id!: number;
 
-  // 3. Asignamos la interfaz al objeto destructurado del constructor
-  constructor({ id, nombre }: EtiquetaProps) {
-    this.id = id;
-    this.nombre = nombre;
+  @Property({ length: 100 })
+  nombre!: string;
+
+  constructor(props?: EtiquetaProps) {
+    if (props) {
+      this.nombre = props.nombre;
+    }
   }
 }

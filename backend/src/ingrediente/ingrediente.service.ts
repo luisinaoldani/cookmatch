@@ -32,7 +32,7 @@ export class IngredienteService {
     if (!existente) {
       throw new Error('Ingrediente no encontrado');
     }
-    const actualizada = new Ingrediente({ id, nombre: data.nombre.trim() });
+    const actualizada = new Ingrediente({ nombre: data.nombre.trim() });
     await repository.update(id, actualizada);
     return actualizada;
   }
