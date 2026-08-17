@@ -1,0 +1,870 @@
+{
+  "namespaces": [],
+  "tables": [
+    {
+      "name": "etiqueta",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "int",
+          "unsigned": true,
+          "autoincrement": true,
+          "primary": true,
+          "nullable": false,
+          "unique": false,
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "default": null,
+          "comment": null,
+          "collation": null,
+          "enumItems": [],
+          "mappedType": "integer"
+        },
+        "nombre": {
+          "name": "nombre",
+          "type": "varchar(100)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": 100,
+          "precision": null,
+          "scale": null,
+          "default": null,
+          "comment": null,
+          "collation": null,
+          "enumItems": [],
+          "mappedType": "string"
+        }
+      },
+      "indexes": [
+        {
+          "columnNames": [
+            "id"
+          ],
+          "composite": false,
+          "constraint": true,
+          "keyName": "PRIMARY",
+          "primary": true,
+          "unique": true
+        }
+      ],
+      "checks": [],
+      "triggers": [],
+      "foreignKeys": {},
+      "comment": null
+    },
+    {
+      "name": "ingrediente",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "int",
+          "unsigned": true,
+          "autoincrement": true,
+          "primary": true,
+          "nullable": false,
+          "unique": false,
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "default": null,
+          "comment": null,
+          "collation": null,
+          "enumItems": [],
+          "mappedType": "integer"
+        },
+        "nombre": {
+          "name": "nombre",
+          "type": "varchar(45)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": 45,
+          "precision": null,
+          "scale": null,
+          "default": null,
+          "comment": null,
+          "collation": null,
+          "enumItems": [],
+          "mappedType": "string"
+        }
+      },
+      "indexes": [
+        {
+          "columnNames": [
+            "id"
+          ],
+          "composite": false,
+          "constraint": true,
+          "keyName": "PRIMARY",
+          "primary": true,
+          "unique": true
+        }
+      ],
+      "checks": [],
+      "triggers": [],
+      "foreignKeys": {},
+      "comment": null
+    },
+    {
+      "name": "paso",
+      "columns": {
+        "descripcion": {
+          "name": "descripcion",
+          "type": "varchar(500)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": 500,
+          "precision": null,
+          "scale": null,
+          "default": null,
+          "comment": null,
+          "collation": null,
+          "enumItems": [],
+          "mappedType": "string"
+        },
+        "idReceta": {
+          "name": "idReceta",
+          "type": "int",
+          "unsigned": true,
+          "autoincrement": false,
+          "primary": true,
+          "nullable": false,
+          "unique": false,
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "default": null,
+          "comment": null,
+          "collation": null,
+          "enumItems": [],
+          "mappedType": "integer"
+        },
+        "numero": {
+          "name": "numero",
+          "type": "int",
+          "unsigned": true,
+          "autoincrement": false,
+          "primary": true,
+          "nullable": false,
+          "unique": false,
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "default": null,
+          "comment": null,
+          "collation": null,
+          "enumItems": [],
+          "mappedType": "integer"
+        }
+      },
+      "indexes": [
+        {
+          "columnNames": [
+            "idReceta",
+            "numero"
+          ],
+          "composite": true,
+          "constraint": true,
+          "keyName": "PRIMARY",
+          "primary": true,
+          "unique": true
+        },
+        {
+          "columnNames": [
+            "idReceta"
+          ],
+          "composite": false,
+          "constraint": false,
+          "keyName": "paso_idReceta_index",
+          "primary": false,
+          "unique": false
+        }
+      ],
+      "checks": [],
+      "triggers": [],
+      "foreignKeys": {
+        "paso_idReceta_foreign": {
+          "columnNames": [
+            "idReceta"
+          ],
+          "constraintName": "paso_idReceta_foreign",
+          "localTableName": "paso",
+          "referencedColumnNames": [
+            "id"
+          ],
+          "referencedTableName": "receta",
+          "updateRule": "cascade",
+          "deleteRule": "cascade"
+        }
+      },
+      "comment": null
+    },
+    {
+      "name": "receta",
+      "columns": {
+        "dificultad": {
+          "name": "dificultad",
+          "type": "varchar(100)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": 100,
+          "precision": null,
+          "scale": null,
+          "default": null,
+          "comment": null,
+          "collation": null,
+          "enumItems": [],
+          "mappedType": "string"
+        },
+        "estado": {
+          "name": "estado",
+          "type": "varchar(100)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": 100,
+          "precision": null,
+          "scale": null,
+          "default": null,
+          "comment": null,
+          "collation": null,
+          "enumItems": [],
+          "mappedType": "string"
+        },
+        "id": {
+          "name": "id",
+          "type": "int",
+          "unsigned": true,
+          "autoincrement": true,
+          "primary": true,
+          "nullable": false,
+          "unique": false,
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "default": null,
+          "comment": null,
+          "collation": null,
+          "enumItems": [],
+          "mappedType": "integer"
+        },
+        "nombre": {
+          "name": "nombre",
+          "type": "varchar(100)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": 100,
+          "precision": null,
+          "scale": null,
+          "default": null,
+          "comment": null,
+          "collation": null,
+          "enumItems": [],
+          "mappedType": "string"
+        },
+        "tiempoMin": {
+          "name": "tiempoMin",
+          "type": "double unsigned",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "default": null,
+          "comment": null,
+          "collation": null,
+          "enumItems": [],
+          "mappedType": "double"
+        }
+      },
+      "indexes": [
+        {
+          "columnNames": [
+            "id"
+          ],
+          "composite": false,
+          "constraint": true,
+          "keyName": "PRIMARY",
+          "primary": true,
+          "unique": true
+        }
+      ],
+      "checks": [],
+      "triggers": [],
+      "foreignKeys": {},
+      "comment": null
+    },
+    {
+      "name": "receta_etiqueta",
+      "columns": {
+        "idEtiqueta": {
+          "name": "idEtiqueta",
+          "type": "int",
+          "unsigned": true,
+          "autoincrement": false,
+          "primary": true,
+          "nullable": false,
+          "unique": false,
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "default": null,
+          "comment": null,
+          "collation": null,
+          "enumItems": [],
+          "mappedType": "integer"
+        },
+        "idReceta": {
+          "name": "idReceta",
+          "type": "int",
+          "unsigned": true,
+          "autoincrement": false,
+          "primary": true,
+          "nullable": false,
+          "unique": false,
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "default": null,
+          "comment": null,
+          "collation": null,
+          "enumItems": [],
+          "mappedType": "integer"
+        }
+      },
+      "indexes": [
+        {
+          "columnNames": [
+            "idReceta",
+            "idEtiqueta"
+          ],
+          "composite": true,
+          "constraint": true,
+          "keyName": "PRIMARY",
+          "primary": true,
+          "unique": true
+        },
+        {
+          "columnNames": [
+            "idEtiqueta"
+          ],
+          "composite": false,
+          "constraint": false,
+          "keyName": "receta_etiqueta_idEtiqueta_index",
+          "primary": false,
+          "unique": false
+        },
+        {
+          "columnNames": [
+            "idReceta"
+          ],
+          "composite": false,
+          "constraint": false,
+          "keyName": "receta_etiqueta_idReceta_index",
+          "primary": false,
+          "unique": false
+        }
+      ],
+      "checks": [],
+      "triggers": [],
+      "foreignKeys": {
+        "receta_etiqueta_idEtiqueta_foreign": {
+          "columnNames": [
+            "idEtiqueta"
+          ],
+          "constraintName": "receta_etiqueta_idEtiqueta_foreign",
+          "localTableName": "receta_etiqueta",
+          "referencedColumnNames": [
+            "id"
+          ],
+          "referencedTableName": "etiqueta",
+          "updateRule": "cascade",
+          "deleteRule": "cascade"
+        },
+        "receta_etiqueta_idReceta_foreign": {
+          "columnNames": [
+            "idReceta"
+          ],
+          "constraintName": "receta_etiqueta_idReceta_foreign",
+          "localTableName": "receta_etiqueta",
+          "referencedColumnNames": [
+            "id"
+          ],
+          "referencedTableName": "receta",
+          "updateRule": "cascade",
+          "deleteRule": "cascade"
+        }
+      },
+      "comment": null
+    },
+    {
+      "name": "receta_ingrediente",
+      "columns": {
+        "cantidad": {
+          "name": "cantidad",
+          "type": "double unsigned",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "default": null,
+          "comment": null,
+          "collation": null,
+          "enumItems": [],
+          "mappedType": "double"
+        },
+        "idIngrediente": {
+          "name": "idIngrediente",
+          "type": "int",
+          "unsigned": true,
+          "autoincrement": false,
+          "primary": true,
+          "nullable": false,
+          "unique": false,
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "default": null,
+          "comment": null,
+          "collation": null,
+          "enumItems": [],
+          "mappedType": "integer"
+        },
+        "idReceta": {
+          "name": "idReceta",
+          "type": "int",
+          "unsigned": true,
+          "autoincrement": false,
+          "primary": true,
+          "nullable": false,
+          "unique": false,
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "default": null,
+          "comment": null,
+          "collation": null,
+          "enumItems": [],
+          "mappedType": "integer"
+        },
+        "unidadMedida": {
+          "name": "unidadMedida",
+          "type": "varchar(100)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": 100,
+          "precision": null,
+          "scale": null,
+          "default": null,
+          "comment": null,
+          "collation": null,
+          "enumItems": [],
+          "mappedType": "string"
+        }
+      },
+      "indexes": [
+        {
+          "columnNames": [
+            "idReceta",
+            "idIngrediente"
+          ],
+          "composite": true,
+          "constraint": true,
+          "keyName": "PRIMARY",
+          "primary": true,
+          "unique": true
+        },
+        {
+          "columnNames": [
+            "idIngrediente"
+          ],
+          "composite": false,
+          "constraint": false,
+          "keyName": "receta_ingrediente_idIngrediente_index",
+          "primary": false,
+          "unique": false
+        },
+        {
+          "columnNames": [
+            "idReceta"
+          ],
+          "composite": false,
+          "constraint": false,
+          "keyName": "receta_ingrediente_idReceta_index",
+          "primary": false,
+          "unique": false
+        }
+      ],
+      "checks": [],
+      "triggers": [],
+      "foreignKeys": {
+        "receta_ingrediente_idIngrediente_foreign": {
+          "columnNames": [
+            "idIngrediente"
+          ],
+          "constraintName": "receta_ingrediente_idIngrediente_foreign",
+          "localTableName": "receta_ingrediente",
+          "referencedColumnNames": [
+            "id"
+          ],
+          "referencedTableName": "ingrediente",
+          "updateRule": "cascade",
+          "deleteRule": "cascade"
+        },
+        "receta_ingrediente_idReceta_foreign": {
+          "columnNames": [
+            "idReceta"
+          ],
+          "constraintName": "receta_ingrediente_idReceta_foreign",
+          "localTableName": "receta_ingrediente",
+          "referencedColumnNames": [
+            "id"
+          ],
+          "referencedTableName": "receta",
+          "updateRule": "cascade",
+          "deleteRule": "cascade"
+        }
+      },
+      "comment": null
+    },
+    {
+      "name": "receta_utensilio",
+      "columns": {
+        "idReceta": {
+          "name": "idReceta",
+          "type": "int",
+          "unsigned": true,
+          "autoincrement": false,
+          "primary": true,
+          "nullable": false,
+          "unique": false,
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "default": null,
+          "comment": null,
+          "collation": null,
+          "enumItems": [],
+          "mappedType": "integer"
+        },
+        "idUtensilio": {
+          "name": "idUtensilio",
+          "type": "int",
+          "unsigned": true,
+          "autoincrement": false,
+          "primary": true,
+          "nullable": false,
+          "unique": false,
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "default": null,
+          "comment": null,
+          "collation": null,
+          "enumItems": [],
+          "mappedType": "integer"
+        }
+      },
+      "indexes": [
+        {
+          "columnNames": [
+            "idReceta",
+            "idUtensilio"
+          ],
+          "composite": true,
+          "constraint": true,
+          "keyName": "PRIMARY",
+          "primary": true,
+          "unique": true
+        },
+        {
+          "columnNames": [
+            "idReceta"
+          ],
+          "composite": false,
+          "constraint": false,
+          "keyName": "receta_utensilio_idReceta_index",
+          "primary": false,
+          "unique": false
+        },
+        {
+          "columnNames": [
+            "idUtensilio"
+          ],
+          "composite": false,
+          "constraint": false,
+          "keyName": "receta_utensilio_idUtensilio_index",
+          "primary": false,
+          "unique": false
+        }
+      ],
+      "checks": [],
+      "triggers": [],
+      "foreignKeys": {
+        "receta_utensilio_idReceta_foreign": {
+          "columnNames": [
+            "idReceta"
+          ],
+          "constraintName": "receta_utensilio_idReceta_foreign",
+          "localTableName": "receta_utensilio",
+          "referencedColumnNames": [
+            "id"
+          ],
+          "referencedTableName": "receta",
+          "updateRule": "cascade",
+          "deleteRule": "cascade"
+        },
+        "receta_utensilio_idUtensilio_foreign": {
+          "columnNames": [
+            "idUtensilio"
+          ],
+          "constraintName": "receta_utensilio_idUtensilio_foreign",
+          "localTableName": "receta_utensilio",
+          "referencedColumnNames": [
+            "id"
+          ],
+          "referencedTableName": "utensilio",
+          "updateRule": "cascade",
+          "deleteRule": "cascade"
+        }
+      },
+      "comment": null
+    },
+    {
+      "name": "restriccion_alimentaria",
+      "columns": {
+        "descripcion": {
+          "name": "descripcion",
+          "type": "varchar(500)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": true,
+          "unique": false,
+          "length": 500,
+          "precision": null,
+          "scale": null,
+          "default": null,
+          "comment": null,
+          "collation": null,
+          "enumItems": [],
+          "mappedType": "string"
+        },
+        "idTipo": {
+          "name": "idTipo",
+          "type": "int",
+          "unsigned": true,
+          "autoincrement": false,
+          "primary": true,
+          "nullable": false,
+          "unique": false,
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "default": null,
+          "comment": null,
+          "collation": null,
+          "enumItems": [],
+          "mappedType": "integer"
+        },
+        "nombre": {
+          "name": "nombre",
+          "type": "varchar(100)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": true,
+          "nullable": false,
+          "unique": false,
+          "length": 100,
+          "precision": null,
+          "scale": null,
+          "default": null,
+          "comment": null,
+          "collation": null,
+          "enumItems": [],
+          "mappedType": "string"
+        }
+      },
+      "indexes": [
+        {
+          "columnNames": [
+            "idTipo",
+            "nombre"
+          ],
+          "composite": true,
+          "constraint": true,
+          "keyName": "PRIMARY",
+          "primary": true,
+          "unique": true
+        },
+        {
+          "columnNames": [
+            "idTipo"
+          ],
+          "composite": false,
+          "constraint": false,
+          "keyName": "restriccion_alimentaria_idTipo_index",
+          "primary": false,
+          "unique": false
+        }
+      ],
+      "checks": [],
+      "triggers": [],
+      "foreignKeys": {
+        "restriccion_alimentaria_idTipo_foreign": {
+          "columnNames": [
+            "idTipo"
+          ],
+          "constraintName": "restriccion_alimentaria_idTipo_foreign",
+          "localTableName": "restriccion_alimentaria",
+          "referencedColumnNames": [
+            "id"
+          ],
+          "referencedTableName": "tipo_restriccion",
+          "updateRule": "cascade",
+          "deleteRule": "cascade"
+        }
+      },
+      "comment": null
+    },
+    {
+      "name": "tipo_restriccion",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "int",
+          "unsigned": true,
+          "autoincrement": true,
+          "primary": true,
+          "nullable": false,
+          "unique": false,
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "default": null,
+          "comment": null,
+          "collation": null,
+          "enumItems": [],
+          "mappedType": "integer"
+        },
+        "tipo": {
+          "name": "tipo",
+          "type": "varchar(100)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": 100,
+          "precision": null,
+          "scale": null,
+          "default": null,
+          "comment": null,
+          "collation": null,
+          "enumItems": [],
+          "mappedType": "string"
+        }
+      },
+      "indexes": [
+        {
+          "columnNames": [
+            "id"
+          ],
+          "composite": false,
+          "constraint": true,
+          "keyName": "PRIMARY",
+          "primary": true,
+          "unique": true
+        }
+      ],
+      "checks": [],
+      "triggers": [],
+      "foreignKeys": {},
+      "comment": null
+    },
+    {
+      "name": "utensilio",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "int",
+          "unsigned": true,
+          "autoincrement": true,
+          "primary": true,
+          "nullable": false,
+          "unique": false,
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "default": null,
+          "comment": null,
+          "collation": null,
+          "enumItems": [],
+          "mappedType": "integer"
+        },
+        "nombre": {
+          "name": "nombre",
+          "type": "varchar(100)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": 100,
+          "precision": null,
+          "scale": null,
+          "default": null,
+          "comment": null,
+          "collation": null,
+          "enumItems": [],
+          "mappedType": "string"
+        }
+      },
+      "indexes": [
+        {
+          "columnNames": [
+            "id"
+          ],
+          "composite": false,
+          "constraint": true,
+          "keyName": "PRIMARY",
+          "primary": true,
+          "unique": true
+        }
+      ],
+      "checks": [],
+      "triggers": [],
+      "foreignKeys": {},
+      "comment": null
+    }
+  ],
+  "views": [],
+  "nativeEnums": {}
+}

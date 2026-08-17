@@ -1,3 +1,4 @@
+import { Entity, Property, ManyToOne } from '@mikro-orm/decorators/es';
 import type { TipoRestriccion } from '../tipo_restriccion/tipo_restriccion.entity.js';
 
 export interface RestriccionAlimentariaProps {
@@ -6,14 +7,26 @@ export interface RestriccionAlimentariaProps {
   descripcion?: string;
 }
 
+@Entity()
 export class RestriccionAlimentaria {
+
+  // fieldName explícito porque la columna se llama `idTipo`, no el default
+  // que hubiera elegido el ORM a partir del nombre de la propiedad. Sin
+  // target explícito: se infiere del tipo de la propiedad (`TipoRestriccion`).
+  @ManyToOne({ primary: true, fieldName: 'idTipo', deleteRule: 'cascade', updateRule: 'cascade' })
   tipoRestriccion!: TipoRestriccion;
+
+  @Property({ primary: true, length: 100 })
   nombre!: string;
+
+  @Property({ length: 500, nullable: true })
   descripcion?: string;
 
-  constructor({ tipoRestriccion, nombre, descripcion }: RestriccionAlimentariaProps) {
-    this.tipoRestriccion = tipoRestriccion;
-    this.nombre = nombre;
-    this.descripcion = descripcion;
+  constructor(props?: RestriccionAlimentariaProps) {
+    if (props) {
+      this.tipoRestriccion = props.tipoRestriccion;
+      this.nombre = props.nombre;
+      this.descripcion = props.descripcion;
+    }
   }
 }

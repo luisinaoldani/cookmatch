@@ -16,11 +16,14 @@ export class PasoService {
     return paso;
   }
 
-  async create(data: { descripcion?: string }): Promise<Paso> {
+  async create(data: { idReceta: number; descripcion?: string }): Promise<Paso> {
     if (!data.descripcion || data.descripcion.trim() === '') {
       throw new Error('La descripción del paso es obligatoria');
     }
-    const nuevoPaso = new Paso({ descripcion: data.descripcion.trim() });
+    if (data.idReceta === undefined || data.idReceta === null) {
+      throw new Error('El idReceta es obligatorio');
+    }
+    const nuevoPaso = new Paso({ idReceta: data.idReceta, descripcion: data.descripcion.trim() });
     return repository.create(nuevoPaso);
   }
 

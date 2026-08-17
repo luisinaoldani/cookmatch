@@ -82,7 +82,6 @@ export class RecetaService {
     }
 
     const actualizada = new Receta({
-      id,
       nombre: data.nombre.trim(),
       dificultad: data.dificultad.trim(),
       tiempoMin: Number(data.tiempoMin),

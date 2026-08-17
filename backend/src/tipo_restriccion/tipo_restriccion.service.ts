@@ -16,20 +16,19 @@ export class TipoRestriccionService {
     return tipo;
   }
 
-  async create(data: { tipo?: string; restricciones?: any[] }): Promise<TipoRestriccion> {
+  async create(data: { tipo?: string }): Promise<TipoRestriccion> {
     if (!data.tipo || data.tipo.trim() === '') {
       throw new Error('El tipo de restricción es obligatorio');
     }
 
     const nuevoTipo = new TipoRestriccion({
       tipo: data.tipo.trim(),
-      restricciones: data.restricciones ?? [],
     });
 
     return repository.create(nuevoTipo);
   }
 
-  async update(id: number, data: { tipo?: string; restricciones?: any[] }): Promise<TipoRestriccion> {
+  async update(id: number, data: { tipo?: string }): Promise<TipoRestriccion> {
     if (!data.tipo || data.tipo.trim() === '') {
       throw new Error('El tipo de restricción es obligatorio');
     }
@@ -40,9 +39,7 @@ export class TipoRestriccionService {
     }
 
     const actualizado = new TipoRestriccion({
-      id,
       tipo: data.tipo.trim(),
-      restricciones: data.restricciones ?? existente.restricciones ?? [],
     });
 
     await repository.update(id, actualizado);
