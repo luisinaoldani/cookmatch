@@ -24,7 +24,7 @@ CookMatch es una aplicación web que permite encontrar recetas en función de lo
 
 ### Modelo
 
-[MD CookMatch](https://drive.google.com/file/d/1wPC4YyZB8ayWdqHaVrbGGERGvp1hEzty/view?usp=sharing)
+[MD CookMatch](https://drive.google.com/file/d/1v4z1HQbnryuAZpM88sd9LAComKIDrk5q/view?usp=sharing)
 
 ## Alcance Funcional
 
