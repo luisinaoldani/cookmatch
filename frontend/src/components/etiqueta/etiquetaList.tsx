@@ -9,7 +9,7 @@ function EtiquetaList() {
   return (
     <ul>
       {etiquetas.map((etiqueta) => (
-        <li key={etiqueta.codigo}>{etiqueta.nombre}</li>
+        <li key={etiqueta.id}>{etiqueta.nombre}</li>
       ))}
     </ul>
   );
