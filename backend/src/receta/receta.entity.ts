@@ -29,11 +29,15 @@ export class Receta {
   utensilios?: Utensilio[];
 
   // 3. Asignamos la interfaz al objeto destructurado del constructor
-  constructor({ id, nombre, dificultad, tiempoMin, estado }: RecetaProps) {
+  constructor({ id, nombre, dificultad, tiempoMin, estado, pasos, ingredientes, etiquetas, utensilios }: RecetaProps) {
     this.id = id;
     this.nombre = nombre;
     this.dificultad = dificultad;
     this.tiempoMin = tiempoMin;
     this.estado = estado;
+    this.pasos = pasos;
+    this.ingredientes = ingredientes;
+    this.etiquetas = etiquetas;
+    this.utensilios = utensilios;
   }
 }
