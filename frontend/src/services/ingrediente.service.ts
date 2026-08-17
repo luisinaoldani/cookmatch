@@ -10,9 +10,9 @@ export const getIngredientes = async (): Promise<Ingrediente[]> => {  // lee tod
   return data;
 };
 
-export const getIngredienteByCodigo = async (codigo: string): Promise<Ingrediente | undefined> => { // lee uno por uno, por codigo
+export const getIngredienteByid = async (id: number): Promise<Ingrediente | undefined> => { // lee uno por uno, por id
   await delay(300); 
-  return data.find((i) => i.codigo === codigo);
+  return data.find((i) => i.id === id);
 };
 
 export const createIngrediente = async (newItem: Partial<Ingrediente>): Promise<Ingrediente> => { // crea uno nuevo // partial<> un objeto con algunos o todos los campos de ingrediente
@@ -22,13 +22,13 @@ export const createIngrediente = async (newItem: Partial<Ingrediente>): Promise<
   return ingrediente;
 };
 
-export const updateIngrediente = async (codigo: string, changes: Partial<Ingrediente>): Promise<Ingrediente | undefined> => { // poder editarlo
+export const updateIngrediente = async (id: number, changes: Partial<Ingrediente>): Promise<Ingrediente | undefined> => { // poder editarlo
   await delay(300);
-  data = data.map((i) => (i.codigo === codigo ? { ...i, ...changes } : i)); // si ese es el que busco, devolvé una copia de i pero con los cambios pisando encima, si no, lo deja como esta
-  return data.find((i) => i.codigo === codigo);
+  data = data.map((i) => (i.id === id ? { ...i, ...changes } : i)); // si ese es el que busco, devolvé una copia de i pero con los cambios pisando encima, si no, lo deja como esta
+  return data.find((i) => i.id === id);
 };
 
-export const deleteIngrediente = async (codigo: string): Promise<void> => { // borrar
+export const deleteIngrediente = async (id: number): Promise<void> => { // borrar
   await delay(300);
-  data = data.filter((i) => i.codigo !== codigo); // se queda con todos los elementos q no cumplan la condición, menos con el q quiero borrar
+  data = data.filter((i) => i.id !== id); // se queda con todos los elementos q no cumplan la condición, menos con el q quiero borrar
 };

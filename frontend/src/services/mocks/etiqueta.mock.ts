@@ -1,7 +1,7 @@
 import {Etiqueta} from "@/entities/etiqueta.entity";
 
 export const etiquetaMock: Etiqueta[] = [
-  { codigo: "VEGET", nombre: "Vegetariano" },
-  { codigo: "VEGAN", nombre: "Vegano" },
-  { codigo: "SINTACC", nombre: "Sin gluten" },
+  { id: 1, nombre: "Vegetariano" },
+  { id: 2, nombre: "Vegano" },
+  { id: 3, nombre: "Sin gluten" },
 ];
