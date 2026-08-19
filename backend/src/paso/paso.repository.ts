@@ -1,4 +1,4 @@
-import { orm } from '../shared/database/db.js';
+import { orm } from '../db.js';
 import { Paso } from './paso.entity.js';
 import { Receta } from '../receta/receta.entity.js';
 

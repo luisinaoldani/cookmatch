@@ -1,5 +1,7 @@
 import { RecetaIngredienteRepository } from './receta_ingrediente.repository.js';
 import { RecetaIngrediente } from './receta_ingrediente.entity.js';
+import type { Receta } from '../receta/receta.entity.js';
+import type { RecetaIngredienteCreateInput, RecetaIngredienteUpdateInput } from './receta_ingrediente.schema.js';
 
 const repository = new RecetaIngredienteRepository();
 
@@ -16,61 +18,31 @@ export class RecetaIngredienteService {
     return item;
   }
 
-  async create(data: {
-    receta?: any;
-    ingrediente?: any;
-    cantidad?: number;
-    unidadMedida?: string;
-  }): Promise<RecetaIngrediente> {
-    if (data.receta === undefined || !data.receta.id) {
-      throw new Error('Debe enviarse una receta válida');
-    }
-    if (!data.ingrediente || !data.ingrediente.id) {
-      throw new Error('Debe enviarse un ingrediente válido');
-    }
-    if (data.cantidad === undefined || Number(data.cantidad) <= 0) {
-      throw new Error('La cantidad del ingrediente es obligatoria');
-    }
-    if (!data.unidadMedida || data.unidadMedida.trim() === '') {
-      throw new Error('La unidad de medida es obligatoria');
-    }
-
+  async create(data: RecetaIngredienteCreateInput): Promise<RecetaIngrediente> {
     const nuevoItem = new RecetaIngrediente({
-      receta: data.receta,
-      ingrediente: data.ingrediente,
-      cantidad: Number(data.cantidad),
-      unidadMedida: data.unidadMedida.trim(),
+      receta: data.receta as Receta,
+      ingrediente: data.ingrediente as any,
+      cantidad: data.cantidad,
+      unidadMedida: data.unidadMedida,
     });
 
     return repository.create(nuevoItem);
   }
 
-  async update(idReceta: number, idIngrediente: number, data: {
-    receta?: any;
-    ingrediente?: any;
-    cantidad?: number;
-    unidadMedida?: string;
-  }): Promise<RecetaIngrediente> {
-    if (!data.ingrediente || !data.ingrediente.id) {
-      throw new Error('Debe enviarse un ingrediente válido');
-    }
-    if (data.cantidad === undefined || Number(data.cantidad) <= 0) {
-      throw new Error('La cantidad del ingrediente es obligatoria');
-    }
-    if (!data.unidadMedida || data.unidadMedida.trim() === '') {
-      throw new Error('La unidad de medida es obligatoria');
-    }
-
+  async update(idReceta: number, idIngrediente: number, data: RecetaIngredienteUpdateInput): Promise<RecetaIngrediente> {
     const existente = await repository.findById(idReceta, idIngrediente);
     if (!existente) {
       throw new Error('Relación receta-ingrediente no encontrada');
     }
 
     const actualizada = new RecetaIngrediente({
-      receta: data.receta,
-      ingrediente: data.ingrediente,
-      cantidad: Number(data.cantidad),
-      unidadMedida: data.unidadMedida.trim(),
+      // El schema de update no pide `receta` (ya va en la URL) y el
+      // repository nunca lee este campo al actualizar; alcanza con el id
+      // para que el tipo cierre.
+      receta: { id: idReceta } as Receta,
+      ingrediente: data.ingrediente as any,
+      cantidad: data.cantidad,
+      unidadMedida: data.unidadMedida,
     });
 
     await repository.update(idReceta, idIngrediente, actualizada);

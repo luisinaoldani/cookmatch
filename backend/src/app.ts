@@ -1,7 +1,7 @@
 import 'dotenv/config';
 import express from 'express';
 import { RequestContext } from '@mikro-orm/core';
-import { initORM, orm } from './shared/database/db.js';
+import { initORM, orm } from './db.js';
 
 import recetaRoutes from './receta/receta.routes.js';
 import recetaIngredienteRoutes from './receta_ingrediente/receta_ingrediente.routes.js';

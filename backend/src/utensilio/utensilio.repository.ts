@@ -1,4 +1,4 @@
-import { orm } from '../shared/database/db.js';
+import { orm } from '../db.js';
 import { Utensilio } from './utensilio.entity.js';
 
 export class UtensilioRepository {

@@ -2,14 +2,14 @@ import 'dotenv/config';
 import { defineConfig } from '@mikro-orm/mysql';
 import { TsMorphMetadataProvider } from '@mikro-orm/reflection';
 
-import { Ingrediente } from '../ingrediente/ingrediente.entity.js';
-import { Etiqueta } from '../etiqueta/etiqueta.entity.js';
-import { Utensilio } from '../utensilio/utensilio.entity.js';
-import { TipoRestriccion } from '../tipo_restriccion/tipo_restriccion.entity.js';
-import { RestriccionAlimentaria } from '../restriccion_alimentaria/restriccion_alimentaria.entity.js';
-import { Paso } from '../paso/paso.entity.js';
-import { Receta } from '../receta/receta.entity.js';
-import { RecetaIngrediente } from '../receta_ingrediente/receta_ingrediente.entity.js';
+import { Ingrediente } from './ingrediente/ingrediente.entity.js';
+import { Etiqueta } from './etiqueta/etiqueta.entity.js';
+import { Utensilio } from './utensilio/utensilio.entity.js';
+import { TipoRestriccion } from './tipo_restriccion/tipo_restriccion.entity.js';
+import { RestriccionAlimentaria } from './restriccion_alimentaria/restriccion_alimentaria.entity.js';
+import { Paso } from './paso/paso.entity.js';
+import { Receta } from './receta/receta.entity.js';
+import { RecetaIngrediente } from './receta_ingrediente/receta_ingrediente.entity.js';
 
 export default defineConfig({
   entities: [

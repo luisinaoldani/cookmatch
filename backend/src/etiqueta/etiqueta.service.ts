@@ -1,5 +1,6 @@
 import { EtiquetaRepository } from './etiqueta.repository.js';
 import { Etiqueta } from './etiqueta.entity.js';
+import type { EtiquetaInput } from './etiqueta.schema.js';
 
 // El Service contiene la lógica de negocio y las validaciones.
 // No sabe nada de SQL: le delega todo el acceso a datos al Repository.
@@ -18,23 +19,19 @@ export class EtiquetaService {
     return etiqueta;
   }
 
-  async create(data: { nombre?: string }): Promise<Etiqueta> {
-    if (!data.nombre || data.nombre.trim() === '') {
-      throw new Error('El nombre de la etiqueta es obligatorio');
-    }
-    const nuevaEtiqueta = new Etiqueta({ nombre: data.nombre.trim() });
+// El shape y el formato de `data` ya los garantizó Zod en el middleware
+// (ver ingrediente.routes.ts): acá solo queda lógica de negocio.
+  async create(data: EtiquetaInput): Promise<Etiqueta> {
+    const nuevaEtiqueta = new Etiqueta({ nombre: data.nombre });
     return repository.create(nuevaEtiqueta);
   }
 
-  async update(id: number, data: { nombre?: string }): Promise<Etiqueta> {
-    if (!data.nombre || data.nombre.trim() === '') {
-      throw new Error('El nombre de la etiqueta es obligatorio');
-    }
+  async update(id: number, data: EtiquetaInput): Promise<Etiqueta> {
     const existente = await repository.findById(id);
     if (!existente) {
       throw new Error('Etiqueta no encontrada');
     }
-    const actualizada = new Etiqueta({ nombre: data.nombre.trim() });
+    const actualizada = new Etiqueta({ nombre: data.nombre });
     await repository.update(id, actualizada);
     return actualizada;
   }

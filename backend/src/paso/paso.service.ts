@@ -1,5 +1,6 @@
 import { PasoRepository } from './paso.repository.js';
 import { Paso } from './paso.entity.js';
+import type { PasoCreateInput, PasoUpdateInput } from './paso.schema.js';
 
 const repository = new PasoRepository();
 
@@ -16,26 +17,17 @@ export class PasoService {
     return paso;
   }
 
-  async create(data: { idReceta: number; descripcion?: string }): Promise<Paso> {
-    if (!data.descripcion || data.descripcion.trim() === '') {
-      throw new Error('La descripción del paso es obligatoria');
-    }
-    if (data.idReceta === undefined || data.idReceta === null) {
-      throw new Error('El idReceta es obligatorio');
-    }
-    const nuevoPaso = new Paso({ idReceta: data.idReceta, descripcion: data.descripcion.trim() });
+  async create(data: PasoCreateInput): Promise<Paso> {
+    const nuevoPaso = new Paso({ idReceta: data.idReceta, descripcion: data.descripcion });
     return repository.create(nuevoPaso);
   }
 
-  async update(idReceta: number, numero: number, data: { descripcion?: string }): Promise<Paso> {
-    if (!data.descripcion || data.descripcion.trim() === '') {
-      throw new Error('La descripción del paso es obligatoria');
-    }
+  async update(idReceta: number, numero: number, data: PasoUpdateInput): Promise<Paso> {
     const existente = await repository.findById(idReceta, numero);
     if (!existente) {
       throw new Error('Paso no encontrado');
     }
-    const actualizada = new Paso({ idReceta, numero, descripcion: data.descripcion.trim() });
+    const actualizada = new Paso({ idReceta, numero, descripcion: data.descripcion });
     await repository.update(idReceta, numero, actualizada);
     return actualizada;
   }

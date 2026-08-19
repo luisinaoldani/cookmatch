@@ -1,4 +1,4 @@
-import { orm } from '../shared/database/db.js';
+import { orm } from '../db.js';
 import { RestriccionAlimentaria } from './restriccion_alimentaria.entity.js';
 import { TipoRestriccion } from '../tipo_restriccion/tipo_restriccion.entity.js';
 

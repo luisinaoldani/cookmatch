@@ -1,5 +1,6 @@
 import { TipoRestriccionRepository } from './tipo_restriccion.repository.js';
 import { TipoRestriccion } from './tipo_restriccion.entity.js';
+import type { TipoRestriccionInput } from './tipo_restriccion.schema.js';
 
 const repository = new TipoRestriccionRepository();
 
@@ -16,30 +17,22 @@ export class TipoRestriccionService {
     return tipo;
   }
 
-  async create(data: { tipo?: string }): Promise<TipoRestriccion> {
-    if (!data.tipo || data.tipo.trim() === '') {
-      throw new Error('El tipo de restricción es obligatorio');
-    }
-
+  async create(data: TipoRestriccionInput): Promise<TipoRestriccion> {
     const nuevoTipo = new TipoRestriccion({
-      tipo: data.tipo.trim(),
+      tipo: data.tipo,
     });
 
     return repository.create(nuevoTipo);
   }
 
-  async update(id: number, data: { tipo?: string }): Promise<TipoRestriccion> {
-    if (!data.tipo || data.tipo.trim() === '') {
-      throw new Error('El tipo de restricción es obligatorio');
-    }
-
+  async update(id: number, data: TipoRestriccionInput): Promise<TipoRestriccion> {
     const existente = await repository.findById(id);
     if (!existente) {
       throw new Error('Tipo de restricción no encontrado');
     }
 
     const actualizado = new TipoRestriccion({
-      tipo: data.tipo.trim(),
+      tipo: data.tipo,
     });
 
     await repository.update(id, actualizado);

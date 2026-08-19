@@ -1,4 +1,4 @@
-import { orm } from '../shared/db.js';
+import { orm } from '../db.js';
 import { RecetaIngrediente } from './receta_ingrediente.entity.js';
 import { Receta } from '../receta/receta.entity.js';
 import { Ingrediente } from '../ingrediente/ingrediente.entity.js';

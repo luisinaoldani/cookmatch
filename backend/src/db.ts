@@ -5,9 +5,9 @@ import config from './mikro-orm.config.js';
 // initORM(), una vez que MikroORM.init() resuelve.
 export let orm: MikroORM;
 
-// Igual que el pool de mysql2 que reemplaza: si no hay credenciales o la
-// base no está arriba, el servidor arranca igual y avisa por consola en
-// vez de crashear. Las rutas que necesiten la base van a fallar recién
+// Si no hay credenciales o labase no está arriba, 
+// el servidor arranca igual y avisa por consola en vez de crashear. 
+// Las rutas que necesiten la base van a fallar recién
 // cuando alguien las use (orm quedará undefined).
 export async function initORM(): Promise<MikroORM | undefined> {
   try {

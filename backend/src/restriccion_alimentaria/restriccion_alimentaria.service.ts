@@ -1,5 +1,7 @@
 import { RestriccionAlimentariaRepository } from './restriccion_alimentaria.repository.js';
 import { RestriccionAlimentaria } from './restriccion_alimentaria.entity.js';
+import type { TipoRestriccion } from '../tipo_restriccion/tipo_restriccion.entity.js';
+import type { RestriccionAlimentariaInput } from './restriccion_alimentaria.schema.js';
 
 const repository = new RestriccionAlimentariaRepository();
 
@@ -16,40 +18,28 @@ export class RestriccionAlimentariaService {
     return restriccion;
   }
 
-  async create(data: { tipoRestriccion?: any; nombre?: string; descripcion?: string }): Promise<RestriccionAlimentaria> {
-    if (!data.tipoRestriccion || !data.tipoRestriccion.id) {
-      throw new Error('Debe enviarse un tipo de restricción válido');
-    }
-    if (!data.nombre || data.nombre.trim() === '') {
-      throw new Error('El nombre de la restricción es obligatorio');
-    }
-
+  async create(data: RestriccionAlimentariaInput): Promise<RestriccionAlimentaria> {
     const nuevaRestriccion = new RestriccionAlimentaria({
-      tipoRestriccion: data.tipoRestriccion,
-      nombre: data.nombre.trim(),
-      descripcion: data.descripcion?.trim(),
+      // Zod solo garantiza { id: number }; el repository es quien arma la
+      // referencia real con getReference(), así que acá alcanza con el id.
+      tipoRestriccion: data.tipoRestriccion as TipoRestriccion,
+      nombre: data.nombre,
+      descripcion: data.descripcion,
     });
 
     return repository.create(nuevaRestriccion);
   }
 
-  async update(idTipoRestriccion: number, nombre: string, data: { tipoRestriccion?: any; nombre?: string; descripcion?: string }): Promise<RestriccionAlimentaria> {
-    if (!data.tipoRestriccion || !data.tipoRestriccion.id) {
-      throw new Error('Debe enviarse un tipo de restricción válido');
-    }
-    if (!data.nombre || data.nombre.trim() === '') {
-      throw new Error('El nombre de la restricción es obligatorio');
-    }
-
+  async update(idTipoRestriccion: number, nombre: string, data: RestriccionAlimentariaInput): Promise<RestriccionAlimentaria> {
     const existente = await repository.findById(idTipoRestriccion, nombre);
     if (!existente) {
       throw new Error('Restricción alimentaria no encontrada');
     }
 
     const actualizada = new RestriccionAlimentaria({
-      tipoRestriccion: data.tipoRestriccion,
-      nombre: data.nombre.trim(),
-      descripcion: data.descripcion?.trim(),
+      tipoRestriccion: data.tipoRestriccion as TipoRestriccion,
+      nombre: data.nombre,
+      descripcion: data.descripcion,
     });
 
     await repository.update(idTipoRestriccion, nombre, actualizada);

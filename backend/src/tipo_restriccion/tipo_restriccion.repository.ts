@@ -1,4 +1,4 @@
-import { orm } from '../shared/database/db.js';
+import { orm } from '../db.js';
 import { TipoRestriccion } from './tipo_restriccion.entity.js';
 
 export class TipoRestriccionRepository {

@@ -1,5 +1,6 @@
 import { UtensilioRepository } from './utensilio.repository.js';
 import { Utensilio } from './utensilio.entity.js';
+import type { UtensilioInput } from './utensilio.schema.js';
 
 const repository = new UtensilioRepository();
 
@@ -16,23 +17,17 @@ export class UtensilioService {
     return utensilio;
   }
 
-  async create(data: { nombre?: string }): Promise<Utensilio> {
-    if (!data.nombre || data.nombre.trim() === '') {
-      throw new Error('El nombre del utensilio es obligatorio');
-    }
-    const nuevoUtensilio = new Utensilio({ nombre: data.nombre.trim() });
+  async create(data: UtensilioInput): Promise<Utensilio> {
+    const nuevoUtensilio = new Utensilio({ nombre: data.nombre });
     return repository.create(nuevoUtensilio);
   }
 
-  async update(id: number, data: { nombre?: string }): Promise<Utensilio> {
-    if (!data.nombre || data.nombre.trim() === '') {
-      throw new Error('El nombre del utensilio es obligatorio');
-    }
+  async update(id: number, data: UtensilioInput): Promise<Utensilio> {
     const existente = await repository.findById(id);
     if (!existente) {
       throw new Error('Utensilio no encontrado');
     }
-    const actualizada = new Utensilio({ nombre: data.nombre.trim() });
+    const actualizada = new Utensilio({ nombre: data.nombre });
     await repository.update(id, actualizada);
     return actualizada;
   }

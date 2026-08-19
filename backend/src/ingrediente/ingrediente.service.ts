@@ -1,5 +1,6 @@
 import { IngredienteRepository } from './ingrediente.repository.js';
 import { Ingrediente } from './ingrediente.entity.js';
+import type { IngredienteInput } from './ingrediente.schema.js';
 
 const repository = new IngredienteRepository();
 
@@ -16,23 +17,17 @@ export class IngredienteService {
     return ingrediente;
   }
 
-  async create(data: { nombre?: string }): Promise<Ingrediente> {
-    if (!data.nombre || data.nombre.trim() === '') {
-      throw new Error('El nombre del ingrediente es obligatorio');
-    }
-    const nuevoIngrediente = new Ingrediente({ nombre: data.nombre.trim() });
+  async create(data: IngredienteInput): Promise<Ingrediente> {
+    const nuevoIngrediente = new Ingrediente({ nombre: data.nombre });
     return repository.create(nuevoIngrediente);
   }
 
-  async update(id: number, data: { nombre?: string }): Promise<Ingrediente> {
-    if (!data.nombre || data.nombre.trim() === '') {
-      throw new Error('El nombre del ingrediente es obligatorio');
-    }
+  async update(id: number, data: IngredienteInput): Promise<Ingrediente> {
     const existente = await repository.findById(id);
     if (!existente) {
       throw new Error('Ingrediente no encontrado');
     }
-    const actualizada = new Ingrediente({ nombre: data.nombre.trim() });
+    const actualizada = new Ingrediente({ nombre: data.nombre });
     await repository.update(id, actualizada);
     return actualizada;
   }

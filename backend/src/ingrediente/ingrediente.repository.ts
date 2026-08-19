@@ -1,4 +1,4 @@
-import { orm } from '../shared/database/db.js';
+import { orm } from '../db.js';
 import { Ingrediente } from './ingrediente.entity.js';
 
 export class IngredienteRepository {
