@@ -1,8 +1,12 @@
-import { useIngredientes } from "../../hooks/useIngrediente";
+import { Ingrediente } from "../../entities/ingrediente.entity";
 
-function IngredienteList() {
-  const { ingredientes, loading, error } = useIngredientes();
+interface IngredienteListProps {
+  ingredientes: Ingrediente[];
+  loading: boolean;
+  error: string | null;
+}
 
+function IngredienteList({ ingredientes, loading, error }: IngredienteListProps) {
   if (loading) return <p>Cargando ingrediente...</p>;
   if (error) return <p>{error}</p>;
 

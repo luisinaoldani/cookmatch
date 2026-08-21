@@ -17,7 +17,8 @@ export const getIngredienteByCodigo = async (id: number): Promise<Ingrediente | 
 
 export const createIngrediente = async (newItem: Partial<Ingrediente>): Promise<Ingrediente> => { // crea uno nuevo
   await delay(300);
-  const ingrediente = { ...newItem } as Ingrediente;
+  const nextId = Math.max(0, ...data.map((i) => i.id ?? 0)) + 1;
+  const ingrediente = { ...newItem, id: nextId } as Ingrediente;
   data.push(ingrediente);
   return ingrediente;
 };
