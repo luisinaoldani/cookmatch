@@ -1,17 +1,17 @@
 import { useState, useEffect } from "react";
 import { Etiqueta } from "../entities/etiqueta.entity";
-import {getEtiquetas} from "../services/etiqueta.service";
-import { EtiquetaMock } from "../services/mocks/etiqueta.mock";
+import { getEtiquetas } from "../services/etiqueta.service";
 
 export function useEtiquetas() {
   const [etiquetas, setEtiquetas] = useState<Etiqueta[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const upload = async () => { //hace 3 cosas en orden, prende el loading, pide los datos, los guarda en el estado, y al final apaga el loading con finally
+  const cargar = async () => {
     try {
       setLoading(true);
-      const data = EtiquetaMock; // TEMPORAL: usando mock hasta levantar el backend;
+      setError(null);
+      const data = await getEtiquetas();
       setEtiquetas(data);
     } catch (err) {
       setError("Error al cargar etiquetas");
@@ -21,8 +21,8 @@ export function useEtiquetas() {
   };
 
   useEffect(() => {
-    upload();
+    cargar();
   }, []);
 
-  return { etiquetas, loading, error, reload: upload };
+  return { etiquetas, loading, error, recargar: cargar };
 }

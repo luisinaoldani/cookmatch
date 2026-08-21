@@ -1,48 +1,48 @@
 import { useState, useEffect } from "react";
-import { Utensilio } from "../../entities/utensilio.entity";
-import { createUtensilio, updateUtensilio } from "../../services/utensilio.service";
+import { TipoRestriccion } from "../../entities/tipo_restriccion.entity";
+import { createTipoRestriccion, updateTipoRestriccion } from "../../services/tipo_restriccion.service";
 import Button from "../ui/button";
 import Input from "../ui/input";
 
-interface UtensilioFormProps {
-  utensilioEditar?: Utensilio;
+interface TipoRestriccionFormProps {
+  tipoRestriccionEditar?: TipoRestriccion;
   onGuardado: () => void;
   onCancelar?: () => void;
 }
 
-function UtensilioForm({ utensilioEditar, onGuardado, onCancelar }: UtensilioFormProps) {
-  const [nombre, setNombre] = useState("");
+function TipoRestriccionForm({ tipoRestriccionEditar, onGuardado, onCancelar }: TipoRestriccionFormProps) {
+  const [tipo, setTipo] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [guardando, setGuardando] = useState(false);
 
-  const esEdicion = !!utensilioEditar;
+  const esEdicion = !!tipoRestriccionEditar;
 
   useEffect(() => {
-    if (utensilioEditar) {
-      setNombre(utensilioEditar.nombre);
+    if (tipoRestriccionEditar) {
+      setTipo(tipoRestriccionEditar.tipo);
     }
-  }, [utensilioEditar]);
+  }, [tipoRestriccionEditar]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
 
-    if (!nombre.trim()) {
-      setError("Completá el nombre");
+    if (!tipo.trim()) {
+      setError("Completá el tipo");
       return;
     }
 
     try {
       setGuardando(true);
-      if (esEdicion && utensilioEditar?.id) {
-        await updateUtensilio(utensilioEditar.id, { nombre });
+      if (esEdicion && tipoRestriccionEditar?.id !== undefined) {
+        await updateTipoRestriccion(tipoRestriccionEditar.id, { tipo });
       } else {
-        await createUtensilio({ nombre });
+        await createTipoRestriccion({ tipo });
       }
-      setNombre("");
+      setTipo("");
       onGuardado();
     } catch (err) {
-      setError("Error al guardar el utensilio");
+      setError("Error al guardar el tipo de restricción");
     } finally {
       setGuardando(false);
     }
@@ -51,10 +51,10 @@ function UtensilioForm({ utensilioEditar, onGuardado, onCancelar }: UtensilioFor
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-3 bg-white p-4 rounded-lg shadow-sm border border-ink/10">
       <h2 className="font-display font-semibold text-lg text-ink">
-        {esEdicion ? "Editar utensilio" : "Nuevo utensilio"}
+        {esEdicion ? "Editar tipo de restricción" : "Nuevo tipo de restricción"}
       </h2>
 
-      <Input label="Nombre" value={nombre} onChange={setNombre} />
+      <Input label="Tipo" value={tipo} onChange={setTipo} />
 
       {error && <p className="text-tomato text-sm">{error}</p>}
 
@@ -66,4 +66,4 @@ function UtensilioForm({ utensilioEditar, onGuardado, onCancelar }: UtensilioFor
   );
 }
 
-export default UtensilioForm;
+export default TipoRestriccionForm;

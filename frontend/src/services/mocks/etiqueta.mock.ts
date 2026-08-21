@@ -1,7 +1,10 @@
-import {Etiqueta} from "@/entities/etiqueta.entity";
+import { Etiqueta } from "../../entities/etiqueta.entity";
 
-export const EtiquetaMock: Etiqueta[] = [
-  { id: 1, nombre: "Vegetariano" },
-  { id: 2, nombre: "Vegano" },
-  { id: 3, nombre: "Sin gluten" },
+export const etiquetaMock: Etiqueta[] = [
+  { id: 1, nombre: "Rápido" },
+  { id: 2, nombre: "Económico" },
+  { id: 3, nombre: "Saludable" },
+  { id: 4, nombre: "Dulce" },
+  { id: 5, nombre: "Fitness" },
+  { id: 6, nombre: "Salado" },
 ];
