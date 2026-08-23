@@ -1,7 +1,7 @@
-import { TipoRestriccion } from "./tipoRestriccion.entity";
+import { TipoRestriccion } from "./tipo_restriccion.entity";
 
 export class RestriccionAlimentaria {
-  nombre!: string;
-  descripcion!: string;
   tipoRestriccion!: TipoRestriccion;
+  nombre!: string;
+  descripcion?: string;
 }

@@ -1,10 +1,14 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 
+
 const links = [
   { label: "Inicio", to: "/" },
   { label: "Recetas", to: "/recetas" },
   { label: "Ingredientes", to: "/ingredientes" },
+  { label: "Etiquetas", to: "/etiquetas" },
+  { label: "Utensilios", to: "/utensilios" },
+  { label: "Tipos de restricción", to: "/tipos-restriccion" },
   { label: "Planificación", to: "/planificacion" },
 ];
 
