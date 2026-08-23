@@ -5,6 +5,9 @@ import EtiquetasPage from "./pages/etiquetaPage";
 import IngredientesPage from "./pages/ingredientePage";
 import UtensiliosPage from "./pages/utensilioPage";
 import TiposRestriccionPage from "./pages/tipo_restriccionPage";
+import RestriccionesAlimentariasPage from "./pages/restriccion_alimentariaPage";
+import RecetasPage from "./pages/recetaPage";
+import PasosPage from "./pages/pasoPage";
 import "./index.css";
 
 function App() {
@@ -16,6 +19,9 @@ function App() {
         <Route path="/ingredientes" element={<IngredientesPage />} />
         <Route path="/utensilios" element={<UtensiliosPage />} />
         <Route path="/tipo-restriccion" element={<TiposRestriccionPage />} />
+        <Route path="/restricciones-alimentarias" element={<RestriccionesAlimentariasPage />} />
+        <Route path="/recetas" element={<RecetasPage />} />
+        <Route path="/recetas/:recetaId/pasos" element={<PasosPage />} />
       </Routes>
     </Layout>
   );
