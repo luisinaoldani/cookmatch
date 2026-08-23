@@ -32,6 +32,7 @@
     "@mikro-orm/mysql": "7.1.11",
     "@mikro-orm/reflection": "^7.1.11",
     "@mikro-orm/sql-highlighter": "1.0.1",
+    "cors": "^2.8.5",
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
     "reflect-metadata": "0.2.2"
@@ -39,6 +40,7 @@
   "devDependencies": {
     "@mikro-orm/cli": "7.1.11",
     "@mikro-orm/migrations": "7.1.11",
+    "@types/cors": "^2.8.17",
     "@types/express": "^5.0.6",
     "@types/node": "^26.1.2",
     "nodemon": "^3.1.14",

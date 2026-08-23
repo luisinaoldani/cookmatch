@@ -1,5 +1,6 @@
 import 'dotenv/config';
 import express from 'express';
+import cors from 'cors';
 import { RequestContext } from '@mikro-orm/core';
 import { initORM, orm } from './db.js';
 
@@ -18,25 +19,31 @@ async function bootstrap() {
   const app = express();
   const PORT = process.env.PORT || 3000;
 
+  // Sin esto, el navegador bloquea las requests del frontend antes de que lleguen acá.
+  // origin: la URL del frontend en dev. Para aprobación se debe tomar
+  // de una env var en vez de dejarla hardcodeada (para AD).
+  app.use(cors({ origin: process.env.FRONTEND_URL || 'http://localhost:5173' }));
+
   app.use(express.json());
 
-  // El em.fork() del bloque 5 llevado a HTTP: crea un EntityManager nuevo
+  // El em.fork() llevado a HTTP: crea un EntityManager nuevo
   // por request, con su propio identity map vacío. Sin esto, todos los
-  // requests comparten el mismo EntityManager y eso mezcla datos entre
-  // usuarios (ver bloque 6 de la guía).
+  // requests comparten el mismo EntityManager y eso mezcla datos entre usuarios.
   app.use((req, res, next) => {
     if (!orm) return next(); // sin conexión a la base, seguimos sin RequestContext
     RequestContext.create(orm.em, next);
   });
 
-  app.use('/recetas', recetaRoutes);
-  app.use('/recetas-ingredientes', recetaIngredienteRoutes);
-  app.use('/tipos-restriccion', tipoRestriccionRoutes);
-  app.use('/restricciones-alimentarias', restriccionAlimentariaRoutes);
-  app.use('/etiquetas', etiquetaRoutes);
-  app.use('/ingredientes', ingredienteRoutes);
-  app.use('/utensilios', utensilioRoutes);
-  app.use('/pasos', pasoRoutes);
+  // El prefijo /api es lo que ya espera axiosConfig.ts del frontend
+  // (VITE_API_URL o el default http://localhost:3000/api).
+  app.use('/api/recetas', recetaRoutes);
+  app.use('/api/recetas-ingredientes', recetaIngredienteRoutes);
+  app.use('/api/tipos-restriccion', tipoRestriccionRoutes);
+  app.use('/api/restricciones-alimentarias', restriccionAlimentariaRoutes);
+  app.use('/api/etiquetas', etiquetaRoutes);
+  app.use('/api/ingredientes', ingredienteRoutes);
+  app.use('/api/utensilios', utensilioRoutes);
+  app.use('/api/pasos', pasoRoutes);
 
   app.get('/', (req, res) => {
     res.send('El backend está funcionando correctamente');
