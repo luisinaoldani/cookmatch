@@ -12,7 +12,7 @@ export class Ingrediente {
   @PrimaryKey()
   id!: number;
 
-  @Property({ length: 45 })
+  @Property({ length: 100 })
   nombre!: string;
 
   // El constructor con props opcionales cumple dos roles: permite

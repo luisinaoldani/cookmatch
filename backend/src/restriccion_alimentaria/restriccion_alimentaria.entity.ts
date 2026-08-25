@@ -10,10 +10,8 @@ export interface RestriccionAlimentariaProps {
 @Entity()
 export class RestriccionAlimentaria {
 
-  // fieldName explícito porque la columna se llama `idTipo`, no el default
-  // que hubiera elegido el ORM a partir del nombre de la propiedad. Sin
-  // target explícito: se infiere del tipo de la propiedad (`TipoRestriccion`).
-  @ManyToOne({ primary: true, fieldName: 'idTipo', deleteRule: 'cascade', updateRule: 'cascade' })
+  // Sin target explícito: se infiere del tipo de la propiedad (`TipoRestriccion`).
+  @ManyToOne({ primary: true, deleteRule: 'cascade', updateRule: 'cascade' })
   tipoRestriccion!: TipoRestriccion;
 
   @Property({ primary: true, length: 100 })

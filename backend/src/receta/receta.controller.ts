@@ -6,7 +6,28 @@ const service = new RecetaService();
 export class RecetaController {
   async getAll(req: Request, res: Response) {
     try {
-      const recetas = await service.getAll();
+      const etiquetasParam = req.query.etiquetas;
+
+      // Listar todo.
+      if (typeof etiquetasParam !== 'string' || etiquetasParam.trim() === '') {
+        const recetas = await service.getAll();
+        res.json(recetas);
+        return;
+      }
+
+      // Se recibe "1,2,3" -> se convierte en [1, 2, 3], descartando cualquier valor que no sea un
+      // entero positivo (esto es query string, no body: no pasa por Zod).
+      const etiquetaIds = etiquetasParam
+        .split(',')
+        .map((valor) => Number(valor.trim()))
+        .filter((valor) => Number.isInteger(valor) && valor > 0);
+
+      if (etiquetaIds.length === 0) {
+        res.status(400).json({ error: 'El parámetro etiquetas debe ser una lista de ids numéricos separados por coma' });
+        return;
+      }
+
+      const recetas = await service.getAll(etiquetaIds);
       res.json(recetas);
     } catch (error) {
       res.status(500).json({ error: 'Error al obtener las recetas' });

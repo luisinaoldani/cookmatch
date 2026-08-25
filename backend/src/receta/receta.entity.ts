@@ -33,10 +33,7 @@ export class Receta {
   @Property({ length: 100 })
   dificultad!: string;
 
-  // fieldName explícito: sin esto, MikroORM convierte el nombre de la
-  // propiedad a snake_case (`tiempo_min`) por default, y la columna real
-  // se llama `tiempoMin` (camelCase, como el resto de esta tabla).
-  @Property({ columnType: 'double unsigned', fieldName: 'tiempoMin' })
+  @Property({ columnType: 'double unsigned' })
   tiempoMin!: number;
 
   @Property({ length: 100 })
@@ -48,23 +45,13 @@ export class Receta {
   @OneToMany({ mappedBy: 'receta' })
   ingredientes = new Collection<RecetaIngrediente>(this);
 
-  // M:N unidireccional. Se mapea EXPLÍCITAMENTE a la tabla intermedia real
-  // (`receta_etiqueta`, columnas `idReceta`/`idEtiqueta`) porque los nombres
-  // por convención de MikroORM (`receta_id`/`etiqueta_id`) no coinciden con
-  // lo que ya está creado en la base. Sin target explícito: se infiere del
-  // tipo de la propiedad (`Collection<Etiqueta>`).
-  @ManyToMany({
-    pivotTable: 'receta_etiqueta',
-    joinColumn: 'idReceta',
-    inverseJoinColumn: 'idEtiqueta',
-  })
+  // M:N unidireccional. Sin pivotTable/joinColumn explícitos: MikroORM
+  // arma la tabla intermedia y las columnas por convención (snake_case)
+  // porque ahora es la ORM la que crea la base, no al revés.
+  @ManyToMany()
   etiquetas = new Collection<Etiqueta>(this);
 
-  @ManyToMany({
-    pivotTable: 'receta_utensilio',
-    joinColumn: 'idReceta',
-    inverseJoinColumn: 'idUtensilio',
-  })
+  @ManyToMany()
   utensilios = new Collection<Utensilio>(this);
 
   // Buffers transitorios (no decorados, no se persisten): guardan los ids

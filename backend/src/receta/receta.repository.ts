@@ -3,13 +3,36 @@ import { Receta } from './receta.entity.js';
 import { Etiqueta } from '../etiqueta/etiqueta.entity.js';
 import { Utensilio } from '../utensilio/utensilio.entity.js';
 
-// Acá se devuelve la receta completa -pasos, ingredientes con su Ingrediente, etiquetas y utensilios- 
-// porque es lo que necesita el detalle de una receta.
+// Acá se devuelve la receta completa: pasos, ingredientes con su Ingrediente, etiquetas y utensilios
+// porque es lo que se muestra en el detalle.
 const POPULATE = ['pasos', 'ingredientes', 'ingredientes.ingrediente', 'etiquetas', 'utensilios'] as const;
 
 export class RecetaRepository {
   async findAll(): Promise<Receta[]> {
     return orm.em.findAll(Receta, { populate: POPULATE });
+  }
+
+  // Es un AND: la receta tiene que tener TODAS las etiquetas pedidas.
+  async findByEtiquetas(etiquetaIds: number[]): Promise<Receta[]> {
+    // Paso 1: traer los ids de recetas que matchean las N etiquetas. 
+    // Agrupamos por receta y pedimos que la cantidad de etiquetas DISTINTAS que
+    // matchearon sea igual a la cantidad pedida (el largo del arreglo) 
+    // — si le falta una, el conteo da menos y la receta queda afuera.
+    const qb = orm.em.createQueryBuilder(Receta, 'r');
+    const filas = await qb
+      .select('r.id')
+      .join('r.etiquetas', 'e')
+      .where({ 'e.id': { $in: etiquetaIds } })
+      .groupBy('r.id')
+      .having('count(distinct e.id) = ?', [etiquetaIds.length])
+      .execute();
+
+    const ids = filas.map((fila: { id: number }) => fila.id);
+    if (ids.length === 0) return [];
+
+    // Paso 2: con los ids ya filtrados, traer la receta completa con el
+    // mismo populate que el detalle.
+    return orm.em.find(Receta, { id: { $in: ids } }, { populate: POPULATE });
   }
 
   async findById(id: number): Promise<Receta | null> {

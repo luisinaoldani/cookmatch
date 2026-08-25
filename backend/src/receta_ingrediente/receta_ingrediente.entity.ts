@@ -12,16 +12,16 @@ export interface RecetaIngredienteProps {
 @Entity()
 export class RecetaIngrediente {
 
-  @ManyToOne({ primary: true, fieldName: 'idReceta', deleteRule: 'cascade', updateRule: 'cascade' })
+  @ManyToOne({ primary: true, deleteRule: 'cascade', updateRule: 'cascade' })
   receta!: Receta;
 
-  @ManyToOne({ primary: true, fieldName: 'idIngrediente', deleteRule: 'cascade', updateRule: 'cascade' })
+  @ManyToOne({ primary: true, deleteRule: 'cascade', updateRule: 'cascade' })
   ingrediente!: Ingrediente;
 
   @Property({ columnType: 'double unsigned' })
   cantidad!: number;
 
-  @Property({ length: 100, fieldName: 'unidadMedida' })
+  @Property({ length: 100 })
   unidadMedida!: string;
 
   constructor(props?: RecetaIngredienteProps) {

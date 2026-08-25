@@ -78,13 +78,13 @@
         },
         "nombre": {
           "name": "nombre",
-          "type": "varchar(45)",
+          "type": "varchar(100)",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
           "nullable": false,
           "unique": false,
-          "length": 45,
+          "length": 100,
           "precision": null,
           "scale": null,
           "default": null,
@@ -131,8 +131,8 @@
           "enumItems": [],
           "mappedType": "string"
         },
-        "idReceta": {
-          "name": "idReceta",
+        "numero": {
+          "name": "numero",
           "type": "int",
           "unsigned": true,
           "autoincrement": false,
@@ -148,8 +148,8 @@
           "enumItems": [],
           "mappedType": "integer"
         },
-        "numero": {
-          "name": "numero",
+        "receta_id": {
+          "name": "receta_id",
           "type": "int",
           "unsigned": true,
           "autoincrement": false,
@@ -169,7 +169,7 @@
       "indexes": [
         {
           "columnNames": [
-            "idReceta",
+            "receta_id",
             "numero"
           ],
           "composite": true,
@@ -180,11 +180,11 @@
         },
         {
           "columnNames": [
-            "idReceta"
+            "receta_id"
           ],
           "composite": false,
           "constraint": false,
-          "keyName": "paso_idReceta_index",
+          "keyName": "paso_receta_id_index",
           "primary": false,
           "unique": false
         }
@@ -192,11 +192,11 @@
       "checks": [],
       "triggers": [],
       "foreignKeys": {
-        "paso_idReceta_foreign": {
+        "paso_receta_id_foreign": {
           "columnNames": [
-            "idReceta"
+            "receta_id"
           ],
-          "constraintName": "paso_idReceta_foreign",
+          "constraintName": "paso_receta_id_foreign",
           "localTableName": "paso",
           "referencedColumnNames": [
             "id"
@@ -279,10 +279,10 @@
           "enumItems": [],
           "mappedType": "string"
         },
-        "tiempoMin": {
-          "name": "tiempoMin",
-          "type": "double unsigned",
-          "unsigned": false,
+        "tiempo_min": {
+          "name": "tiempo_min",
+          "type": "double",
+          "unsigned": true,
           "autoincrement": false,
           "primary": false,
           "nullable": false,
@@ -315,10 +315,10 @@
       "comment": null
     },
     {
-      "name": "receta_etiqueta",
+      "name": "receta_etiquetas",
       "columns": {
-        "idEtiqueta": {
-          "name": "idEtiqueta",
+        "etiqueta_id": {
+          "name": "etiqueta_id",
           "type": "int",
           "unsigned": true,
           "autoincrement": false,
@@ -334,8 +334,8 @@
           "enumItems": [],
           "mappedType": "integer"
         },
-        "idReceta": {
-          "name": "idReceta",
+        "receta_id": {
+          "name": "receta_id",
           "type": "int",
           "unsigned": true,
           "autoincrement": false,
@@ -355,8 +355,8 @@
       "indexes": [
         {
           "columnNames": [
-            "idReceta",
-            "idEtiqueta"
+            "receta_id",
+            "etiqueta_id"
           ],
           "composite": true,
           "constraint": true,
@@ -366,21 +366,21 @@
         },
         {
           "columnNames": [
-            "idEtiqueta"
+            "etiqueta_id"
           ],
           "composite": false,
           "constraint": false,
-          "keyName": "receta_etiqueta_idEtiqueta_index",
+          "keyName": "receta_etiquetas_etiqueta_id_index",
           "primary": false,
           "unique": false
         },
         {
           "columnNames": [
-            "idReceta"
+            "receta_id"
           ],
           "composite": false,
           "constraint": false,
-          "keyName": "receta_etiqueta_idReceta_index",
+          "keyName": "receta_etiquetas_receta_id_index",
           "primary": false,
           "unique": false
         }
@@ -388,12 +388,12 @@
       "checks": [],
       "triggers": [],
       "foreignKeys": {
-        "receta_etiqueta_idEtiqueta_foreign": {
+        "receta_etiquetas_etiqueta_id_foreign": {
           "columnNames": [
-            "idEtiqueta"
+            "etiqueta_id"
           ],
-          "constraintName": "receta_etiqueta_idEtiqueta_foreign",
-          "localTableName": "receta_etiqueta",
+          "constraintName": "receta_etiquetas_etiqueta_id_foreign",
+          "localTableName": "receta_etiquetas",
           "referencedColumnNames": [
             "id"
           ],
@@ -401,12 +401,12 @@
           "updateRule": "cascade",
           "deleteRule": "cascade"
         },
-        "receta_etiqueta_idReceta_foreign": {
+        "receta_etiquetas_receta_id_foreign": {
           "columnNames": [
-            "idReceta"
+            "receta_id"
           ],
-          "constraintName": "receta_etiqueta_idReceta_foreign",
-          "localTableName": "receta_etiqueta",
+          "constraintName": "receta_etiquetas_receta_id_foreign",
+          "localTableName": "receta_etiquetas",
           "referencedColumnNames": [
             "id"
           ],
@@ -422,8 +422,8 @@
       "columns": {
         "cantidad": {
           "name": "cantidad",
-          "type": "double unsigned",
-          "unsigned": false,
+          "type": "double",
+          "unsigned": true,
           "autoincrement": false,
           "primary": false,
           "nullable": false,
@@ -437,8 +437,8 @@
           "enumItems": [],
           "mappedType": "double"
         },
-        "idIngrediente": {
-          "name": "idIngrediente",
+        "ingrediente_id": {
+          "name": "ingrediente_id",
           "type": "int",
           "unsigned": true,
           "autoincrement": false,
@@ -454,8 +454,8 @@
           "enumItems": [],
           "mappedType": "integer"
         },
-        "idReceta": {
-          "name": "idReceta",
+        "receta_id": {
+          "name": "receta_id",
           "type": "int",
           "unsigned": true,
           "autoincrement": false,
@@ -471,8 +471,8 @@
           "enumItems": [],
           "mappedType": "integer"
         },
-        "unidadMedida": {
-          "name": "unidadMedida",
+        "unidad_medida": {
+          "name": "unidad_medida",
           "type": "varchar(100)",
           "unsigned": false,
           "autoincrement": false,
@@ -492,8 +492,8 @@
       "indexes": [
         {
           "columnNames": [
-            "idReceta",
-            "idIngrediente"
+            "receta_id",
+            "ingrediente_id"
           ],
           "composite": true,
           "constraint": true,
@@ -503,21 +503,21 @@
         },
         {
           "columnNames": [
-            "idIngrediente"
+            "ingrediente_id"
           ],
           "composite": false,
           "constraint": false,
-          "keyName": "receta_ingrediente_idIngrediente_index",
+          "keyName": "receta_ingrediente_ingrediente_id_index",
           "primary": false,
           "unique": false
         },
         {
           "columnNames": [
-            "idReceta"
+            "receta_id"
           ],
           "composite": false,
           "constraint": false,
-          "keyName": "receta_ingrediente_idReceta_index",
+          "keyName": "receta_ingrediente_receta_id_index",
           "primary": false,
           "unique": false
         }
@@ -525,11 +525,11 @@
       "checks": [],
       "triggers": [],
       "foreignKeys": {
-        "receta_ingrediente_idIngrediente_foreign": {
+        "receta_ingrediente_ingrediente_id_foreign": {
           "columnNames": [
-            "idIngrediente"
+            "ingrediente_id"
           ],
-          "constraintName": "receta_ingrediente_idIngrediente_foreign",
+          "constraintName": "receta_ingrediente_ingrediente_id_foreign",
           "localTableName": "receta_ingrediente",
           "referencedColumnNames": [
             "id"
@@ -538,11 +538,11 @@
           "updateRule": "cascade",
           "deleteRule": "cascade"
         },
-        "receta_ingrediente_idReceta_foreign": {
+        "receta_ingrediente_receta_id_foreign": {
           "columnNames": [
-            "idReceta"
+            "receta_id"
           ],
-          "constraintName": "receta_ingrediente_idReceta_foreign",
+          "constraintName": "receta_ingrediente_receta_id_foreign",
           "localTableName": "receta_ingrediente",
           "referencedColumnNames": [
             "id"
@@ -555,10 +555,10 @@
       "comment": null
     },
     {
-      "name": "receta_utensilio",
+      "name": "receta_utensilios",
       "columns": {
-        "idReceta": {
-          "name": "idReceta",
+        "receta_id": {
+          "name": "receta_id",
           "type": "int",
           "unsigned": true,
           "autoincrement": false,
@@ -574,8 +574,8 @@
           "enumItems": [],
           "mappedType": "integer"
         },
-        "idUtensilio": {
-          "name": "idUtensilio",
+        "utensilio_id": {
+          "name": "utensilio_id",
           "type": "int",
           "unsigned": true,
           "autoincrement": false,
@@ -595,8 +595,8 @@
       "indexes": [
         {
           "columnNames": [
-            "idReceta",
-            "idUtensilio"
+            "receta_id",
+            "utensilio_id"
           ],
           "composite": true,
           "constraint": true,
@@ -606,21 +606,21 @@
         },
         {
           "columnNames": [
-            "idReceta"
+            "receta_id"
           ],
           "composite": false,
           "constraint": false,
-          "keyName": "receta_utensilio_idReceta_index",
+          "keyName": "receta_utensilios_receta_id_index",
           "primary": false,
           "unique": false
         },
         {
           "columnNames": [
-            "idUtensilio"
+            "utensilio_id"
           ],
           "composite": false,
           "constraint": false,
-          "keyName": "receta_utensilio_idUtensilio_index",
+          "keyName": "receta_utensilios_utensilio_id_index",
           "primary": false,
           "unique": false
         }
@@ -628,12 +628,12 @@
       "checks": [],
       "triggers": [],
       "foreignKeys": {
-        "receta_utensilio_idReceta_foreign": {
+        "receta_utensilios_receta_id_foreign": {
           "columnNames": [
-            "idReceta"
+            "receta_id"
           ],
-          "constraintName": "receta_utensilio_idReceta_foreign",
-          "localTableName": "receta_utensilio",
+          "constraintName": "receta_utensilios_receta_id_foreign",
+          "localTableName": "receta_utensilios",
           "referencedColumnNames": [
             "id"
           ],
@@ -641,12 +641,12 @@
           "updateRule": "cascade",
           "deleteRule": "cascade"
         },
-        "receta_utensilio_idUtensilio_foreign": {
+        "receta_utensilios_utensilio_id_foreign": {
           "columnNames": [
-            "idUtensilio"
+            "utensilio_id"
           ],
-          "constraintName": "receta_utensilio_idUtensilio_foreign",
-          "localTableName": "receta_utensilio",
+          "constraintName": "receta_utensilios_utensilio_id_foreign",
+          "localTableName": "receta_utensilios",
           "referencedColumnNames": [
             "id"
           ],
@@ -677,23 +677,6 @@
           "enumItems": [],
           "mappedType": "string"
         },
-        "idTipo": {
-          "name": "idTipo",
-          "type": "int",
-          "unsigned": true,
-          "autoincrement": false,
-          "primary": true,
-          "nullable": false,
-          "unique": false,
-          "length": null,
-          "precision": null,
-          "scale": null,
-          "default": null,
-          "comment": null,
-          "collation": null,
-          "enumItems": [],
-          "mappedType": "integer"
-        },
         "nombre": {
           "name": "nombre",
           "type": "varchar(100)",
@@ -710,12 +693,29 @@
           "collation": null,
           "enumItems": [],
           "mappedType": "string"
+        },
+        "tipo_restriccion_id": {
+          "name": "tipo_restriccion_id",
+          "type": "int",
+          "unsigned": true,
+          "autoincrement": false,
+          "primary": true,
+          "nullable": false,
+          "unique": false,
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "default": null,
+          "comment": null,
+          "collation": null,
+          "enumItems": [],
+          "mappedType": "integer"
         }
       },
       "indexes": [
         {
           "columnNames": [
-            "idTipo",
+            "tipo_restriccion_id",
             "nombre"
           ],
           "composite": true,
@@ -726,11 +726,11 @@
         },
         {
           "columnNames": [
-            "idTipo"
+            "tipo_restriccion_id"
           ],
           "composite": false,
           "constraint": false,
-          "keyName": "restriccion_alimentaria_idTipo_index",
+          "keyName": "restriccion_alimentaria_tipo_restriccion_id_index",
           "primary": false,
           "unique": false
         }
@@ -738,11 +738,11 @@
       "checks": [],
       "triggers": [],
       "foreignKeys": {
-        "restriccion_alimentaria_idTipo_foreign": {
+        "restriccion_alimentaria_tipo_restriccion_id_foreign": {
           "columnNames": [
-            "idTipo"
+            "tipo_restriccion_id"
           ],
-          "constraintName": "restriccion_alimentaria_idTipo_foreign",
+          "constraintName": "restriccion_alimentaria_tipo_restriccion_id_foreign",
           "localTableName": "restriccion_alimentaria",
           "referencedColumnNames": [
             "id"
