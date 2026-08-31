@@ -4,6 +4,7 @@ import type { Paso } from '../paso/paso.entity.js';
 import type { RecetaIngrediente } from '../receta_ingrediente/receta_ingrediente.entity.js';
 import type { Etiqueta } from '../etiqueta/etiqueta.entity.js';
 import type { Utensilio } from '../utensilio/utensilio.entity.js';
+import type { RestriccionAlimentaria } from '../restriccion_alimentaria/restriccion_alimentaria.entity.js';
 
 export interface RecetaProps {
   nombre: string; // la columna admite NULL en la base real
@@ -20,6 +21,8 @@ export interface RecetaProps {
   // así que alcanza con mandar los ids en el body
   etiquetas?: { id: number }[];
   utensilios?: { id: number }[];
+  // restricciones: qué restricciones alimentarias cumple esta receta.
+  restricciones?: { id: number }[];
 }
 
 @Entity()
@@ -54,11 +57,18 @@ export class Receta {
   @ManyToMany()
   utensilios = new Collection<Utensilio>(this);
 
+  // M:N unidireccional hacia RestriccionAlimentaria (PK propia autoincremental).
+  // Indica qué restricciones alimentarias cumple esta receta, para poder
+  // filtrar/excluir recetas al generar una planificación semanal.
+  @ManyToMany()
+  restricciones = new Collection<RestriccionAlimentaria>(this);
+
   // Buffers transitorios (no decorados, no se persisten): guardan los ids
   // crudos que llegaron del body para que el repository arme las
   // referencias con em.getReference() antes del flush().
   etiquetasInput?: { id: number }[];
   utensiliosInput?: { id: number }[];
+  restriccionesInput?: { id: number }[];
 
   constructor(props?: RecetaProps) {
     if (props) {
@@ -68,6 +78,7 @@ export class Receta {
       this.estado = props.estado;
       this.etiquetasInput = props.etiquetas;
       this.utensiliosInput = props.utensilios;
+      this.restriccionesInput = props.restricciones;
     }
   }
 }

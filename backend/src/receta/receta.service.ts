@@ -28,6 +28,7 @@ export class RecetaService {
       estado: data.estado,
       etiquetas: data.etiquetas,
       utensilios: data.utensilios,
+      restricciones: data.restricciones,
     });
 
     return repository.create(nuevaReceta);
@@ -46,6 +47,7 @@ export class RecetaService {
       estado: data.estado,
       etiquetas: data.etiquetas,
       utensilios: data.utensilios,
+      restricciones: data.restricciones,
     });
 
     await repository.update(id, actualizada);

@@ -555,6 +555,109 @@
       "comment": null
     },
     {
+      "name": "receta_restricciones",
+      "columns": {
+        "receta_id": {
+          "name": "receta_id",
+          "type": "int",
+          "unsigned": true,
+          "autoincrement": false,
+          "primary": true,
+          "nullable": false,
+          "unique": false,
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "default": null,
+          "comment": null,
+          "collation": null,
+          "enumItems": [],
+          "mappedType": "integer"
+        },
+        "restriccion_alimentaria_id": {
+          "name": "restriccion_alimentaria_id",
+          "type": "int",
+          "unsigned": true,
+          "autoincrement": false,
+          "primary": true,
+          "nullable": false,
+          "unique": false,
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "default": null,
+          "comment": null,
+          "collation": null,
+          "enumItems": [],
+          "mappedType": "integer"
+        }
+      },
+      "indexes": [
+        {
+          "columnNames": [
+            "receta_id",
+            "restriccion_alimentaria_id"
+          ],
+          "composite": true,
+          "constraint": true,
+          "keyName": "PRIMARY",
+          "primary": true,
+          "unique": true
+        },
+        {
+          "columnNames": [
+            "receta_id"
+          ],
+          "composite": false,
+          "constraint": false,
+          "keyName": "receta_restricciones_receta_id_index",
+          "primary": false,
+          "unique": false
+        },
+        {
+          "columnNames": [
+            "restriccion_alimentaria_id"
+          ],
+          "composite": false,
+          "constraint": false,
+          "keyName": "receta_restricciones_restriccion_alimentaria_id_index",
+          "primary": false,
+          "unique": false
+        }
+      ],
+      "checks": [],
+      "triggers": [],
+      "foreignKeys": {
+        "receta_restricciones_receta_id_foreign": {
+          "columnNames": [
+            "receta_id"
+          ],
+          "constraintName": "receta_restricciones_receta_id_foreign",
+          "localTableName": "receta_restricciones",
+          "referencedColumnNames": [
+            "id"
+          ],
+          "referencedTableName": "receta",
+          "updateRule": "cascade",
+          "deleteRule": "cascade"
+        },
+        "receta_restricciones_restriccion_alimentaria_id_foreign": {
+          "columnNames": [
+            "restriccion_alimentaria_id"
+          ],
+          "constraintName": "receta_restricciones_restriccion_alimentaria_id_foreign",
+          "localTableName": "receta_restricciones",
+          "referencedColumnNames": [
+            "id"
+          ],
+          "referencedTableName": "restriccion_alimentaria",
+          "updateRule": "cascade",
+          "deleteRule": "cascade"
+        }
+      },
+      "comment": null
+    },
+    {
       "name": "receta_utensilios",
       "columns": {
         "receta_id": {
@@ -677,12 +780,29 @@
           "enumItems": [],
           "mappedType": "string"
         },
+        "id": {
+          "name": "id",
+          "type": "int",
+          "unsigned": true,
+          "autoincrement": true,
+          "primary": true,
+          "nullable": false,
+          "unique": false,
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "default": null,
+          "comment": null,
+          "collation": null,
+          "enumItems": [],
+          "mappedType": "integer"
+        },
         "nombre": {
           "name": "nombre",
           "type": "varchar(100)",
           "unsigned": false,
           "autoincrement": false,
-          "primary": true,
+          "primary": false,
           "nullable": false,
           "unique": false,
           "length": 100,
@@ -699,7 +819,7 @@
           "type": "int",
           "unsigned": true,
           "autoincrement": false,
-          "primary": true,
+          "primary": false,
           "nullable": false,
           "unique": false,
           "length": null,
@@ -715,10 +835,9 @@
       "indexes": [
         {
           "columnNames": [
-            "tipo_restriccion_id",
-            "nombre"
+            "id"
           ],
-          "composite": true,
+          "composite": false,
           "constraint": true,
           "keyName": "PRIMARY",
           "primary": true,

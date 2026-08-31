@@ -2,10 +2,19 @@ import { orm } from '../db.js';
 import { Receta } from './receta.entity.js';
 import { Etiqueta } from '../etiqueta/etiqueta.entity.js';
 import { Utensilio } from '../utensilio/utensilio.entity.js';
+import { RestriccionAlimentaria } from '../restriccion_alimentaria/restriccion_alimentaria.entity.js';
+import { TipoRestriccion } from '../tipo_restriccion/tipo_restriccion.entity.js';
 
-// Acá se devuelve la receta completa: pasos, ingredientes con su Ingrediente, etiquetas y utensilios
-// porque es lo que se muestra en el detalle.
-const POPULATE = ['pasos', 'ingredientes', 'ingredientes.ingrediente', 'etiquetas', 'utensilios'] as const;
+// Acá se devuelve la receta completa: pasos, ingredientes con su Ingrediente, etiquetas, utensilios
+// y restricciones que cumple, porque es lo que se muestra en el detalle.
+const POPULATE = [
+  'pasos',
+  'ingredientes',
+  'ingredientes.ingrediente',
+  'etiquetas',
+  'utensilios',
+  'restricciones',
+] as const;
 
 export class RecetaRepository {
   async findAll(): Promise<Receta[]> {
@@ -46,7 +55,7 @@ export class RecetaRepository {
       tiempoMin: receta.tiempoMin,
       estado: receta.estado,
     });
-    this.setEtiquetasYUtensilios(nueva, receta);
+    this.setRelacionesMN(nueva, receta);
     await orm.em.flush();
     return nueva;
   }
@@ -58,7 +67,7 @@ export class RecetaRepository {
     existente.dificultad = receta.dificultad;
     existente.tiempoMin = receta.tiempoMin;
     existente.estado = receta.estado;
-    this.setEtiquetasYUtensilios(existente, receta);
+    this.setRelacionesMN(existente, receta);
     await orm.em.flush();
     return true;
   }
@@ -73,13 +82,16 @@ export class RecetaRepository {
 
   // .set() reemplaza el contenido completo de la colección M:N por las
   // referencias nuevas; el ORM calcula solo los INSERT/DELETE que hacen
-  // falta en receta_etiqueta / receta_utensilio, no borra y recrea todo.
-  private setEtiquetasYUtensilios(destino: Receta, origen: Receta): void {
+  // falta en cada tabla intermedia, no borra y recrea todo.
+  private setRelacionesMN(destino: Receta, origen: Receta): void {
     if (origen.etiquetasInput) {
       destino.etiquetas.set(origen.etiquetasInput.map((e) => orm.em.getReference(Etiqueta, e.id)));
     }
     if (origen.utensiliosInput) {
       destino.utensilios.set(origen.utensiliosInput.map((u) => orm.em.getReference(Utensilio, u.id)));
+    }
+    if (origen.restriccionesInput) {
+      destino.restricciones.set(origen.restriccionesInput.map((r) => orm.em.getReference(RestriccionAlimentaria, r.id)));
     }
   }
 }
