@@ -5,8 +5,11 @@ import type { RecetaInput } from './receta.schema.js';
 const repository = new RecetaRepository();
 
 export class RecetaService {
-  async getAll(etiquetaIds?: number[]): Promise<Receta[]> {
+  async getAll(etiquetaIds?: number[], restriccionIds?: number[]): Promise<Receta[]> {
     if (etiquetaIds && etiquetaIds.length > 0) {
+      if (restriccionIds && restriccionIds.length > 0) {
+        return repository.findByEtiquetasRestricciones(etiquetaIds, restriccionIds);
+      }
       return repository.findByEtiquetas(etiquetaIds);
     }
     return repository.findAll();
