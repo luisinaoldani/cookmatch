@@ -10,10 +10,11 @@ function RecetaDetallePage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    getRecetaByCodigo(Number(id)).then((r) => {
-      setReceta(r);
-      setLoading(false);
-    });
+    setLoading(true);
+    getRecetaByCodigo(Number(id))
+      .then((r) => setReceta(r))
+      .catch(() => setReceta(undefined))
+      .finally(() => setLoading(false));
   }, [id]);
 
   if (loading) return <p className="text-ink/50">Cargando...</p>;

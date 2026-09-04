@@ -47,12 +47,12 @@ function RestriccionAlimentariaForm({ restriccionEditar, onGuardado, onCancelar 
 
     try {
       setGuardando(true);
-      if (esEdicion && restriccionEditar) {
-        await updateRestriccionAlimentaria(
-          restriccionEditar.tipoRestriccion.id!,
-          restriccionEditar.nombre,
-          { nombre, descripcion, tipoRestriccion }
-        );
+      if (esEdicion && restriccionEditar?.id !== undefined) {
+        await updateRestriccionAlimentaria(restriccionEditar.id, {
+          nombre,
+          descripcion,
+          tipoRestriccion,
+        });
       } else {
         await createRestriccionAlimentaria({ nombre, descripcion, tipoRestriccion });
       }
