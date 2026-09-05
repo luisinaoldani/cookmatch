@@ -1,4 +1,3 @@
-// src/components/receta/recetaList.tsx
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useRecetas } from "../../hooks/useReceta";

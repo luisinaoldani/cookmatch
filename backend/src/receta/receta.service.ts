@@ -6,7 +6,13 @@ import { NotFoundError } from '../shared/errors.js'; //Agrega la importación de
 const repository = new RecetaRepository();
 
 export class RecetaService {
-  async getAll(): Promise<Receta[]> {
+  async getAll(etiquetaIds?: number[], restriccionIds?: number[]): Promise<Receta[]> {
+    if (etiquetaIds && etiquetaIds.length > 0) {
+      if (restriccionIds && restriccionIds.length > 0) {
+        return repository.findByEtiquetasRestricciones(etiquetaIds, restriccionIds);
+      }
+      return repository.findByEtiquetas(etiquetaIds);
+    }
     return repository.findAll();
   }
 
@@ -26,6 +32,7 @@ export class RecetaService {
       estado: data.estado,
       etiquetas: data.etiquetas,
       utensilios: data.utensilios,
+      restricciones: data.restricciones,
     });
 
     return repository.create(nuevaReceta);
@@ -44,6 +51,7 @@ export class RecetaService {
       estado: data.estado,
       etiquetas: data.etiquetas,
       utensilios: data.utensilios,
+      restricciones: data.restricciones,
     });
 
     await repository.update(id, actualizada);

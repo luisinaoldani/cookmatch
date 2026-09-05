@@ -10,8 +10,8 @@ function RestriccionAlimentariaList() {
   const [editando, setEditando] = useState<RestriccionAlimentaria | undefined>(undefined);
   const [mostrarForm, setMostrarForm] = useState(false);
 
-  const handleDelete = async (idTipo: number, nombre: string) => {
-    await deleteRestriccionAlimentaria(idTipo, nombre);
+  const handleDelete = async (id: number) => {
+    await deleteRestriccionAlimentaria(id);
     recargar();
   };
 
@@ -45,7 +45,7 @@ function RestriccionAlimentariaList() {
       <ul className="flex flex-col gap-2">
         {restricciones.map((r) => (
           <li
-            key={`${r.tipoRestriccion.id}-${r.nombre}`}
+            key={r.id}
             className="flex justify-between items-center bg-white p-3 rounded border border-ink/10"
           >
             <div>
@@ -57,7 +57,7 @@ function RestriccionAlimentariaList() {
               <button onClick={() => { setEditando(r); setMostrarForm(true); }} className="text-basil text-sm hover:underline">
                 Editar
               </button>
-              <button onClick={() => handleDelete(r.tipoRestriccion.id!, r.nombre)} className="text-tomato text-sm hover:underline">
+              <button onClick={() => handleDelete(r.id!)} className="text-tomato text-sm hover:underline">
                 Eliminar
               </button>
             </div>

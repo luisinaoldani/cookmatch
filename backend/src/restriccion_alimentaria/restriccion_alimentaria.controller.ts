@@ -15,9 +15,8 @@ export class RestriccionAlimentariaController {
 
   async getById(req: Request, res: Response, next: NextFunction) {
     try {
-      const idTipoRestriccion = Number(req.params.idTipoRestriccion);
-      const nombre = String(req.params.nombre);
-      const restriccion = await service.getById(idTipoRestriccion, nombre);
+      const id = Number(req.params.id);
+      const restriccion = await service.getById(id);
       res.json(restriccion);
     } catch (error) {
       next(error);
@@ -35,9 +34,8 @@ export class RestriccionAlimentariaController {
 
   async update(req: Request, res: Response, next: NextFunction) {
     try {
-      const idTipoRestriccion = Number(req.params.idTipoRestriccion);
-      const nombre = String(req.params.nombre);
-      const actualizada = await service.update(idTipoRestriccion, nombre, req.body);
+      const id = Number(req.params.id);
+      const actualizada = await service.update(id, req.body);
       res.json(actualizada);
     } catch (error) {
       next(error);
@@ -46,9 +44,8 @@ export class RestriccionAlimentariaController {
 
   async delete(req: Request, res: Response, next: NextFunction) {
     try {
-      const idTipoRestriccion = Number(req.params.idTipoRestriccion);
-      const nombre = String(req.params.nombre);
-      await service.delete(idTipoRestriccion, nombre);
+      const id = Number(req.params.id);
+      await service.delete(id);
       res.status(204).send();
     } catch (error) {
       next(error);

@@ -26,6 +26,7 @@ export const recetaSchema = z.object({
   // ignora si llegan en este body.
   etiquetas: z.array(idRef).optional(),
   utensilios: z.array(idRef).optional(),
+  restricciones: z.array(idRef).optional(),
 });
 
 export type RecetaInput = z.infer<typeof recetaSchema>;

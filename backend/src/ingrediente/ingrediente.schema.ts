@@ -5,7 +5,7 @@ export const ingredienteSchema = z.object({
     .string({ message: 'El nombre es obligatorio' })
     .trim()
     .min(1, 'El nombre es obligatorio')
-    .max(45, 'El nombre no puede superar los 45 caracteres'),
+    .max(100, 'El nombre no puede superar los 100 caracteres'),
 });
 
 export type IngredienteInput = z.infer<typeof ingredienteSchema>;

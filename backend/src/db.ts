@@ -5,7 +5,7 @@ import config from './mikro-orm.config.js';
 // initORM(), una vez que MikroORM.init() resuelve.
 export let orm: MikroORM;
 
-// Si no hay credenciales o labase no está arriba, 
+// Si no hay credenciales o la base no está arriba, 
 // el servidor arranca igual y avisa por consola en vez de crashear. 
 // Las rutas que necesiten la base van a fallar recién
 // cuando alguien las use (orm quedará undefined).

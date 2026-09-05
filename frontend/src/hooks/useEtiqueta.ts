@@ -26,3 +26,4 @@ export function useEtiquetas() {
 
   return { etiquetas, loading, error, recargar: cargar };
 }
+

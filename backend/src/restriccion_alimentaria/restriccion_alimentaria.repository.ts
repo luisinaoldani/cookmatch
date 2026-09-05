@@ -7,8 +7,8 @@ export class RestriccionAlimentariaRepository {
     return orm.em.findAll(RestriccionAlimentaria, { populate: ['tipoRestriccion'] });
   }
 
-  async findById(idTipoRestriccion: number, nombre: string): Promise<RestriccionAlimentaria | null> {
-    return orm.em.findOne(RestriccionAlimentaria, { tipoRestriccion: { id: idTipoRestriccion }, nombre }, { populate: ['tipoRestriccion'] });
+  async findById(id: number): Promise<RestriccionAlimentaria | null> {
+    return orm.em.findOne(RestriccionAlimentaria, { id }, { populate: ['tipoRestriccion'] });
   }
 
   async create(restriccion: RestriccionAlimentaria): Promise<RestriccionAlimentaria> {
@@ -25,8 +25,8 @@ export class RestriccionAlimentariaRepository {
     return nueva;
   }
 
-  async update(idTipoRestriccion: number, nombre: string, restriccion: RestriccionAlimentaria): Promise<boolean> {
-    const existente = await orm.em.findOne(RestriccionAlimentaria, { tipoRestriccion: { id: idTipoRestriccion }, nombre });
+  async update(id: number, restriccion: RestriccionAlimentaria): Promise<boolean> {
+    const existente = await orm.em.findOne(RestriccionAlimentaria, { id });
     if (!existente) return false;
     existente.tipoRestriccion = orm.em.getReference(TipoRestriccion, restriccion.tipoRestriccion.id);
     existente.nombre = restriccion.nombre;
@@ -35,8 +35,8 @@ export class RestriccionAlimentariaRepository {
     return true;
   }
 
-  async delete(idTipoRestriccion: number, nombre: string): Promise<boolean> {
-    const existente = await orm.em.findOne(RestriccionAlimentaria, { tipoRestriccion: { id: idTipoRestriccion }, nombre });
+  async delete(id: number): Promise<boolean> {
+    const existente = await orm.em.findOne(RestriccionAlimentaria, { id });
     if (!existente) return false;
     orm.em.remove(existente);
     await orm.em.flush();

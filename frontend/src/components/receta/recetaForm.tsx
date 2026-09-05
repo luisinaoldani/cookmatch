@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { Receta } from "../../entities/receta.entity";
 import { createReceta, updateReceta } from "../../services/receta.service";
+import { useEtiquetas } from "../../hooks/useEtiqueta";
+import { useUtensilios } from "../../hooks/useUtensilio";
 import Input from "../ui/input";
 import Button from "../ui/button";
 
@@ -11,10 +13,15 @@ interface RecetaFormProps {
 }
 
 function RecetaForm({ recetaEditar, onGuardado, onCancelar }: RecetaFormProps) {
+  const { etiquetas } = useEtiquetas();
+  const { utensilios } = useUtensilios();
+
   const [nombre, setNombre] = useState("");
   const [dificultad, setDificultad] = useState("Fácil");
   const [tiempoMin, setTiempoMin] = useState("");
   const [estado, setEstado] = useState("Borrador");
+  const [etiquetasSeleccionadas, setEtiquetasSeleccionadas] = useState<number[]>([]);
+  const [utensiliosSeleccionados, setUtensiliosSeleccionados] = useState<number[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -26,8 +33,22 @@ function RecetaForm({ recetaEditar, onGuardado, onCancelar }: RecetaFormProps) {
       setDificultad(recetaEditar.dificultad);
       setTiempoMin(String(recetaEditar.tiempoMin));
       setEstado(recetaEditar.estado);
+      setEtiquetasSeleccionadas(recetaEditar.etiquetas?.map((e) => e.id!) ?? []);
+      setUtensiliosSeleccionados(recetaEditar.utensilios?.map((u) => u.id!) ?? []);
     }
   }, [recetaEditar]);
+
+  const toggleEtiqueta = (id: number) => {
+    setEtiquetasSeleccionadas((prev) =>
+      prev.includes(id) ? prev.filter((e) => e !== id) : [...prev, id]
+    );
+  };
+
+  const toggleUtensilio = (id: number) => {
+    setUtensiliosSeleccionados((prev) =>
+      prev.includes(id) ? prev.filter((u) => u !== id) : [...prev, id]
+    );
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -41,12 +62,17 @@ function RecetaForm({ recetaEditar, onGuardado, onCancelar }: RecetaFormProps) {
       setLoading(true);
       setError(null);
 
+      const etiquetasPayload = etiquetasSeleccionadas.map((id) => ({ id }));
+      const utensiliosPayload = utensiliosSeleccionados.map((id) => ({ id }));
+
       if (esEdicion && recetaEditar?.id !== undefined) {
         await updateReceta(recetaEditar.id, {
           nombre,
           dificultad,
           tiempoMin: Number(tiempoMin),
           estado,
+          etiquetas: etiquetasPayload as any,
+          utensilios: utensiliosPayload as any,
         });
       } else {
         await createReceta({
@@ -54,9 +80,9 @@ function RecetaForm({ recetaEditar, onGuardado, onCancelar }: RecetaFormProps) {
           dificultad,
           tiempoMin: Number(tiempoMin),
           estado,
-          etiquetas: [],
+          etiquetas: etiquetasPayload as any,
+          utensilios: utensiliosPayload as any,
           pasos: [],
-          utensilios: [],
           ingredientes: [],
         });
       }
@@ -65,9 +91,12 @@ function RecetaForm({ recetaEditar, onGuardado, onCancelar }: RecetaFormProps) {
       setDificultad("Fácil");
       setTiempoMin("");
       setEstado("Borrador");
+      setEtiquetasSeleccionadas([]);
+      setUtensiliosSeleccionados([]);
 
       onGuardado();
-    } catch {
+    } catch (err) {
+      console.error("Error real:", err);
       setError("Error al guardar la receta");
     } finally {
       setLoading(false);
@@ -111,6 +140,38 @@ function RecetaForm({ recetaEditar, onGuardado, onCancelar }: RecetaFormProps) {
           <option value="Borrador">Borrador</option>
           <option value="Publicada">Publicada</option>
         </select>
+      </div>
+
+      <div className="flex flex-col gap-1">
+        <label className="text-sm text-ink/60">Etiquetas</label>
+        <div className="flex flex-wrap gap-2">
+          {etiquetas.map((et) => (
+            <label key={et.id} className="flex items-center gap-1 text-sm border border-ink/20 rounded-full px-3 py-1 cursor-pointer">
+              <input
+                type="checkbox"
+                checked={etiquetasSeleccionadas.includes(et.id!)}
+                onChange={() => toggleEtiqueta(et.id!)}
+              />
+              {et.nombre}
+            </label>
+          ))}
+        </div>
+      </div>
+
+      <div className="flex flex-col gap-1">
+        <label className="text-sm text-ink/60">Utensilios</label>
+        <div className="flex flex-wrap gap-2">
+          {utensilios.map((u) => (
+            <label key={u.id} className="flex items-center gap-1 text-sm border border-ink/20 rounded-full px-3 py-1 cursor-pointer">
+              <input
+                type="checkbox"
+                checked={utensiliosSeleccionados.includes(u.id!)}
+                onChange={() => toggleUtensilio(u.id!)}
+              />
+              {u.nombre}
+            </label>
+          ))}
+        </div>
       </div>
 
       {error && <p className="text-tomato text-sm">{error}</p>}

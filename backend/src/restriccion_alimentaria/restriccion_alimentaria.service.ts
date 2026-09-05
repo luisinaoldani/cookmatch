@@ -11,8 +11,8 @@ export class RestriccionAlimentariaService {
     return repository.findAll();
   }
 
-  async getById(idTipoRestriccion: number, nombre: string): Promise<RestriccionAlimentaria> {
-    const restriccion = await repository.findById(idTipoRestriccion, nombre);
+  async getById(id: number): Promise<RestriccionAlimentaria> {
+    const restriccion = await repository.findById(id);
     if (!restriccion) {
       throw new NotFoundError('Restricción alimentaria no encontrada');
     }
@@ -31,8 +31,8 @@ export class RestriccionAlimentariaService {
     return repository.create(nuevaRestriccion);
   }
 
-  async update(idTipoRestriccion: number, nombre: string, data: RestriccionAlimentariaInput): Promise<RestriccionAlimentaria> {
-    const existente = await repository.findById(idTipoRestriccion, nombre);
+  async update(id: number, data: RestriccionAlimentariaInput): Promise<RestriccionAlimentaria> {
+    const existente = await repository.findById(id);
     if (!existente) {
       throw new NotFoundError('Restricción alimentaria no encontrada');
     }
@@ -43,12 +43,12 @@ export class RestriccionAlimentariaService {
       descripcion: data.descripcion,
     });
 
-    await repository.update(idTipoRestriccion, nombre, actualizada);
+    await repository.update(id, actualizada);
     return actualizada;
   }
 
-  async delete(idTipoRestriccion: number, nombre: string): Promise<void> {
-    const eliminada = await repository.delete(idTipoRestriccion, nombre);
+  async delete(id: number): Promise<void> {
+    const eliminada = await repository.delete(id);
     if (!eliminada) {
       throw new NotFoundError('Restricción alimentaria no encontrada');
     }

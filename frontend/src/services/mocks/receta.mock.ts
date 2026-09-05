@@ -41,7 +41,7 @@ export const RecetaMock: Receta[] = [
     estado: "Publicada",
     etiquetas: [
       { id: 3, nombre: "Ensalada" },
-      { id: 4, nombre: "Saludable" },
+      { id: 4, nombre: "Cena" },
     ],
     pasos: [
       { numero: 1, descripcion: "Lavar y cortar la lechuga." },
