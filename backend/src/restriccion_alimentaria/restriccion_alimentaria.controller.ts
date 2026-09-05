@@ -1,57 +1,57 @@
-import type { Request, Response } from 'express';
+import type { Request, Response, NextFunction } from 'express';
 import { RestriccionAlimentariaService } from './restriccion_alimentaria.service.js';
 
 const service = new RestriccionAlimentariaService();
 
 export class RestriccionAlimentariaController {
-  async getAll(req: Request, res: Response) {
+  async getAll(req: Request, res: Response, next: NextFunction) {
     try {
       const restricciones = await service.getAll();
       res.json(restricciones);
     } catch (error) {
-      res.status(500).json({ error: 'Error al obtener las restricciones alimentarias' });
+      next(error);
     }
   }
 
-  async getById(req: Request, res: Response) {
+  async getById(req: Request, res: Response, next: NextFunction) {
     try {
       const idTipoRestriccion = Number(req.params.idTipoRestriccion);
       const nombre = String(req.params.nombre);
       const restriccion = await service.getById(idTipoRestriccion, nombre);
       res.json(restriccion);
     } catch (error) {
-      res.status(404).json({ error: (error as Error).message });
+      next(error);
     }
   }
 
-  async create(req: Request, res: Response) {
+  async create(req: Request, res: Response, next: NextFunction) {
     try {
       const nuevaRestriccion = await service.create(req.body);
       res.status(201).json(nuevaRestriccion);
     } catch (error) {
-      res.status(400).json({ error: (error as Error).message });
+      next(error);
     }
   }
 
-  async update(req: Request, res: Response) {
+  async update(req: Request, res: Response, next: NextFunction) {
     try {
       const idTipoRestriccion = Number(req.params.idTipoRestriccion);
       const nombre = String(req.params.nombre);
       const actualizada = await service.update(idTipoRestriccion, nombre, req.body);
       res.json(actualizada);
     } catch (error) {
-      res.status(400).json({ error: (error as Error).message });
+      next(error);
     }
   }
 
-  async delete(req: Request, res: Response) {
+  async delete(req: Request, res: Response, next: NextFunction) {
     try {
       const idTipoRestriccion = Number(req.params.idTipoRestriccion);
       const nombre = String(req.params.nombre);
       await service.delete(idTipoRestriccion, nombre);
       res.status(204).send();
     } catch (error) {
-      res.status(404).json({ error: (error as Error).message });
+      next(error);
     }
   }
 }

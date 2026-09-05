@@ -2,6 +2,7 @@ import { RestriccionAlimentariaRepository } from './restriccion_alimentaria.repo
 import { RestriccionAlimentaria } from './restriccion_alimentaria.entity.js';
 import type { TipoRestriccion } from '../tipo_restriccion/tipo_restriccion.entity.js';
 import type { RestriccionAlimentariaInput } from './restriccion_alimentaria.schema.js';
+import { NotFoundError } from '../shared/errors.js'; //Agrega la importación de NotFoundError desde el archivo de errores compartidos para manejar casos donde una restricción alimentaria no se encuentra en la base de datos.
 
 const repository = new RestriccionAlimentariaRepository();
 
@@ -13,7 +14,7 @@ export class RestriccionAlimentariaService {
   async getById(idTipoRestriccion: number, nombre: string): Promise<RestriccionAlimentaria> {
     const restriccion = await repository.findById(idTipoRestriccion, nombre);
     if (!restriccion) {
-      throw new Error('Restricción alimentaria no encontrada');
+      throw new NotFoundError('Restricción alimentaria no encontrada');
     }
     return restriccion;
   }
@@ -33,7 +34,7 @@ export class RestriccionAlimentariaService {
   async update(idTipoRestriccion: number, nombre: string, data: RestriccionAlimentariaInput): Promise<RestriccionAlimentaria> {
     const existente = await repository.findById(idTipoRestriccion, nombre);
     if (!existente) {
-      throw new Error('Restricción alimentaria no encontrada');
+      throw new NotFoundError('Restricción alimentaria no encontrada');
     }
 
     const actualizada = new RestriccionAlimentaria({
@@ -49,7 +50,7 @@ export class RestriccionAlimentariaService {
   async delete(idTipoRestriccion: number, nombre: string): Promise<void> {
     const eliminada = await repository.delete(idTipoRestriccion, nombre);
     if (!eliminada) {
-      throw new Error('Restricción alimentaria no encontrada');
+      throw new NotFoundError('Restricción alimentaria no encontrada');
     }
   }
 }

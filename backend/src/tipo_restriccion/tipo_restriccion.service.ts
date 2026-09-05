@@ -1,6 +1,7 @@
 import { TipoRestriccionRepository } from './tipo_restriccion.repository.js';
 import { TipoRestriccion } from './tipo_restriccion.entity.js';
 import type { TipoRestriccionInput } from './tipo_restriccion.schema.js';
+import { NotFoundError } from '../shared/errors.js'; //Agrega la importación de NotFoundError desde el archivo de errores compartidos para manejar casos donde un tipo de restricción no se encuentra en la base de datos.
 
 const repository = new TipoRestriccionRepository();
 
@@ -12,7 +13,7 @@ export class TipoRestriccionService {
   async getById(id: number): Promise<TipoRestriccion> {
     const tipo = await repository.findById(id);
     if (!tipo) {
-      throw new Error('Tipo de restricción no encontrado');
+      throw new NotFoundError('Tipo de restricción no encontrado');
     }
     return tipo;
   }
@@ -28,7 +29,7 @@ export class TipoRestriccionService {
   async update(id: number, data: TipoRestriccionInput): Promise<TipoRestriccion> {
     const existente = await repository.findById(id);
     if (!existente) {
-      throw new Error('Tipo de restricción no encontrado');
+      throw new NotFoundError('Tipo de restricción no encontrado');
     }
 
     const actualizado = new TipoRestriccion({
@@ -42,7 +43,7 @@ export class TipoRestriccionService {
   async delete(id: number): Promise<void> {
     const eliminada = await repository.delete(id);
     if (!eliminada) {
-      throw new Error('Tipo de restricción no encontrado');
+      throw new NotFoundError('Tipo de restricción no encontrado');
     }
   }
 }

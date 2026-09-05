@@ -1,6 +1,7 @@
 import { EtiquetaRepository } from './etiqueta.repository.js';
 import { Etiqueta } from './etiqueta.entity.js';
 import type { EtiquetaInput } from './etiqueta.schema.js';
+import { NotFoundError } from '../shared/errors.js'; //Agrega la importación de NotFoundError desde el archivo de errores compartidos para manejar casos donde una etiqueta no se encuentra en la base de datos.
 
 // El Service contiene la lógica de negocio y las validaciones.
 // No sabe nada de SQL: le delega todo el acceso a datos al Repository.
@@ -14,7 +15,7 @@ export class EtiquetaService {
   async getById(id: number): Promise<Etiqueta> {
     const etiqueta = await repository.findById(id);
     if (!etiqueta) {
-      throw new Error('Etiqueta no encontrada');
+      throw new NotFoundError('Etiqueta no encontrada');
     }
     return etiqueta;
   }
@@ -29,7 +30,7 @@ export class EtiquetaService {
   async update(id: number, data: EtiquetaInput): Promise<Etiqueta> {
     const existente = await repository.findById(id);
     if (!existente) {
-      throw new Error('Etiqueta no encontrada');
+      throw new NotFoundError('Etiqueta no encontrada');
     }
     const actualizada = new Etiqueta({ nombre: data.nombre });
     await repository.update(id, actualizada);
@@ -39,7 +40,7 @@ export class EtiquetaService {
   async delete(id: number): Promise<void> {
     const eliminada = await repository.delete(id);
     if (!eliminada) {
-      throw new Error('Etiqueta no encontrada');
+      throw new NotFoundError('Etiqueta no encontrada');
     }
   }
 }

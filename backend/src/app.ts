@@ -12,6 +12,7 @@ import etiquetaRoutes from './etiqueta/etiqueta.routes.js';
 import ingredienteRoutes from './ingrediente/ingrediente.routes.js';
 import utensilioRoutes from './utensilio/utensilio.routes.js';
 import pasoRoutes from './paso/paso.routes.js';
+import { errorHandler } from './shared/errorHandler.js';
 
 async function bootstrap() {
   await initORM();
@@ -48,6 +49,8 @@ async function bootstrap() {
   app.get('/', (req, res) => {
     res.send('El backend está funcionando correctamente');
   });
+
+  app.use(errorHandler);
 
   app.listen(PORT, () => {
     console.log(`Servidor corriendo con éxito en http://localhost:${PORT}`);

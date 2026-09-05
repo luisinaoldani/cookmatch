@@ -1,6 +1,7 @@
 import { orm } from '../db.js';
 import { Paso } from './paso.entity.js';
 import { Receta } from '../receta/receta.entity.js';
+import { BadRequestError } from '../shared/errors.js';
 
 export class PasoRepository {
   async findAll(): Promise<Paso[]> {
@@ -14,7 +15,7 @@ export class PasoRepository {
   async create(paso: Paso): Promise<Paso> {
     const idReceta = paso.idReceta;
     if (idReceta === undefined) {
-      throw new Error('El idReceta es obligatorio');
+      throw new BadRequestError('El idReceta es obligatorio');
     }
     const receta = orm.em.getReference(Receta, idReceta);
     const numero = await this.proximoNumero(idReceta);

@@ -1,6 +1,7 @@
 import { RecetaRepository } from './receta.repository.js';
 import { Receta } from './receta.entity.js';
 import type { RecetaInput } from './receta.schema.js';
+import { NotFoundError } from '../shared/errors.js'; //Agrega la importación de NotFoundError desde el archivo de errores compartidos para manejar casos donde una receta no se encuentra en la base de datos.
 
 const repository = new RecetaRepository();
 
@@ -12,7 +13,7 @@ export class RecetaService {
   async getById(id: number): Promise<Receta> {
     const receta = await repository.findById(id);
     if (!receta) {
-      throw new Error('Receta no encontrada');
+      throw new NotFoundError('Receta no encontrada');
     }
     return receta;
   }
@@ -33,7 +34,7 @@ export class RecetaService {
   async update(id: number, data: RecetaInput): Promise<Receta> {
     const existente = await repository.findById(id);
     if (!existente) {
-      throw new Error('Receta no encontrada');
+      throw new NotFoundError('Receta no encontrada');
     }
 
     const actualizada = new Receta({
@@ -52,7 +53,7 @@ export class RecetaService {
   async delete(id: number): Promise<void> {
     const eliminada = await repository.delete(id);
     if (!eliminada) {
-      throw new Error('Receta no encontrada');
+      throw new NotFoundError('Receta no encontrada');
     }
   }
 }
