@@ -80,6 +80,12 @@ export class RecetaRepository {
     return orm.em.findOne(Receta, { id }, { populate: POPULATE });
   }
 
+  // Sirve para el CUU Planificar comidas de la semana, 
+  // para que no se utilice el findById por cada comida de las 28.
+  async findByIds(ids: number[]): Promise<Receta[]> {
+    return orm.em.find(Receta, { id: { $in: ids } }, { populate: POPULATE });
+  }
+
   async create(receta: Receta): Promise<Receta> {
     const nueva = orm.em.create(Receta, {
       nombre: receta.nombre,

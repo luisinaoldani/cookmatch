@@ -12,6 +12,7 @@ import etiquetaRoutes from './etiqueta/etiqueta.routes.js';
 import ingredienteRoutes from './ingrediente/ingrediente.routes.js';
 import utensilioRoutes from './utensilio/utensilio.routes.js';
 import pasoRoutes from './paso/paso.routes.js';
+import planificacionRoutes from './planificacion/planificacion.routes.js';
 import { errorHandler } from './shared/errorHandler.js';
 
 async function bootstrap() {
@@ -45,6 +46,7 @@ async function bootstrap() {
   app.use('/api/ingredientes', ingredienteRoutes);
   app.use('/api/utensilios', utensilioRoutes);
   app.use('/api/pasos', pasoRoutes);
+  app.use('/api/planificacion', planificacionRoutes);
 
   app.get('/', (req, res) => {
     res.send('El backend está funcionando correctamente');

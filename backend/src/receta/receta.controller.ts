@@ -6,32 +6,35 @@ const service = new RecetaService();
 export class RecetaController {
   async getAll(req: Request, res: Response, next: NextFunction) {
     try {
-      const etiquetasParam = req.query.etiquetas;
-
-      // Listar todo.
-      if (typeof etiquetasParam !== 'string' || etiquetasParam.trim() === '') {
-        const recetas = await service.getAll();
-        res.json(recetas);
-        return;
-      }
-
-      // Se recibe "1,2,3" -> se convierte en [1, 2, 3], descartando cualquier valor que no sea un
-      // entero positivo (esto es query string, no body: no pasa por Zod).
-      const etiquetaIds = etiquetasParam
-        .split(',')
-        .map((valor) => Number(valor.trim()))
-        .filter((valor) => Number.isInteger(valor) && valor > 0);
-
-      if (etiquetaIds.length === 0) {
+      const etiquetaIds = this.parseIds(req.query.etiquetas);
+      if (etiquetaIds === null) {
         res.status(400).json({ error: 'El parámetro etiquetas debe ser una lista de ids numéricos separados por coma' });
         return;
       }
 
-      const recetas = await service.getAll(etiquetaIds);
+      const restriccionIds = this.parseIds(req.query.restricciones);
+      if (restriccionIds === null) {
+        res.status(400).json({ error: 'El parámetro restricciones debe ser una lista de ids numéricos separados por coma' });
+        return;
+      }
+
+      const recetas = await service.getAll(etiquetaIds, restriccionIds);
       res.json(recetas);
     } catch (error) {
       next(error);
     }
+  }
+
+  // devuelve [] si el parámetro no vino (sin filtro),
+  // null si vino pero es inválido (para poder devolver 400),
+  // o la lista de ids parseados si está bien.
+  private parseIds(param: unknown): number[] | null {
+    if (typeof param !== 'string' || param.trim() === '') return [];
+    const ids = param
+      .split(',')
+      .map((v) => Number(v.trim()))
+      .filter((v) => Number.isInteger(v) && v > 0);
+    return ids.length > 0 ? ids : null;
   }
 
   async getById(req: Request, res: Response, next: NextFunction) {

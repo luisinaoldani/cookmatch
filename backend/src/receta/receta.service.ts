@@ -6,14 +6,19 @@ import { NotFoundError } from '../shared/errors.js'; //Agrega la importación de
 const repository = new RecetaRepository();
 
 export class RecetaService {
-  async getAll(etiquetaIds?: number[], restriccionIds?: number[]): Promise<Receta[]> {
-    if (etiquetaIds && etiquetaIds.length > 0) {
-      if (restriccionIds && restriccionIds.length > 0) {
-        return repository.findByEtiquetasRestricciones(etiquetaIds, restriccionIds);
-      }
+  async getAll(etiquetaIds: number[] = [], restriccionIds: number[] = []): Promise<Receta[]> {
+    const hayEtiquetas = etiquetaIds.length > 0;
+    const hayRestricciones = restriccionIds.length > 0;
+
+    if (!hayEtiquetas && !hayRestricciones) {
+      return repository.findAll();
+    }
+
+    if (hayEtiquetas && !hayRestricciones) {
       return repository.findByEtiquetas(etiquetaIds);
     }
-    return repository.findAll();
+
+    return repository.findByEtiquetasRestricciones(etiquetaIds, restriccionIds);
   }
 
   async getById(id: number): Promise<Receta> {
