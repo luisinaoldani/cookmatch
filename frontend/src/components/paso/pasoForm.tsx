@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { createPaso, updatePaso,} from "../../services/paso.service";
+import { createPaso, updatePaso } from "../../services/paso.service";
 import { Paso } from "../../entities/paso.entity";
 import Input from "../ui/input";
 import Button from "../ui/button";
@@ -10,11 +10,7 @@ interface PasoFormProps {
   onSaved?: () => void;
 }
 
-function PasoForm({
-  recetaId,
-  pasoEditando,
-  onSaved,
-}: PasoFormProps) {
+function PasoForm({ recetaId, pasoEditando, onSaved }: PasoFormProps) {
   const [descripcion, setDescripcion] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -51,14 +47,21 @@ function PasoForm({
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form
+      onSubmit={handleSubmit}
+      className="flex flex-col gap-3 rounded-lg border border-ink/10 bg-white p-4 shadow-sm"
+    >
+      <h2 className="font-display text-lg font-semibold text-ink">
+        {pasoEditando ? "Editar paso" : "Nuevo paso"}
+      </h2>
+
       <Input
         label="Descripción del paso"
         value={descripcion}
         onChange={setDescripcion}
       />
 
-      {error && <p>{error}</p>}
+      {error && <p className="text-sm text-tomato">{error}</p>}
 
       <Button
         texto={

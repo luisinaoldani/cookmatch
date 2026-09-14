@@ -1,4 +1,5 @@
 import { ReactNode } from "react";
+
 interface ButtonProps {
   texto: string;
   variant?: "primary" | "secondary" | "danger";
@@ -10,9 +11,9 @@ interface ButtonProps {
 }
 
 const variantStyles = {
-  primary: "bg-blue-600 text-white hover:bg-blue-700",
-  secondary: "text-gray-600 hover:bg-gray-100",
-  danger: "bg-red-600 text-white hover:bg-red-700",
+  primary: "bg-basil text-white hover:opacity-90",
+  secondary: "text-ink/70 border border-ink/20 hover:bg-surface",
+  danger: "bg-tomato text-white hover:opacity-90",
 };
 
 function Button({ texto, variant = "primary", type = "button", disabled, onClick, children, className = "" }: ButtonProps) {

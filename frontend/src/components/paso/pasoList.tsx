@@ -1,5 +1,6 @@
 import { Paso } from "../../entities/paso.entity";
 import { deletePaso } from "../../services/paso.service";
+import Button from "../ui/button";
 
 interface PasoListProps {
   recetaId: number;
@@ -23,22 +24,24 @@ function PasoList({
     onChanged();
   };
 
-  if (loading) return <p>Cargando pasos...</p>;
-  if (error) return <p>{error}</p>;
+  if (loading) return <p className="text-ink/50">Cargando pasos...</p>;
+  if (error) return <p className="text-tomato">{error}</p>;
 
   return (
-    <ol>
+    <ol className="flex flex-col gap-2">
       {pasos.map((paso) => (
-        <li key={paso.numero}>
-          <span>
-            Paso {paso.numero}: {paso.descripcion}
+        <li
+          key={paso.numero}
+          className="flex items-center gap-3 rounded border border-ink/10 bg-white p-3"
+        >
+          <div className="flex gap-2 shrink-0">
+            <Button texto="Editar" variant="secondary" onClick={() => onEdit(paso)} />
+            <Button texto="Eliminar" variant="danger" onClick={() => handleDelete(paso.numero)} />
+          </div>
+
+          <span className="text-ink/80">
+            <span className="font-semibold">Paso {paso.numero}:</span> {paso.descripcion}
           </span>
-
-          <button onClick={() => onEdit(paso)}>Editar</button>
-
-          <button onClick={() => handleDelete(paso.numero)}>
-            Eliminar
-          </button>
         </li>
       ))}
     </ol>
