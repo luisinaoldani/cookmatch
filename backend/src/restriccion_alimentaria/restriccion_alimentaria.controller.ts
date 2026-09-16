@@ -6,7 +6,8 @@ const service = new RestriccionAlimentariaService();
 export class RestriccionAlimentariaController {
   async getAll(req: Request, res: Response, next: NextFunction) {
     try {
-      const restricciones = await service.getAll();
+      const tipoRestriccion = req.query.tipoRestriccion ? Number(req.query.tipoRestriccion) : undefined;
+      const restricciones = await service.getAll(tipoRestriccion);
       res.json(restricciones);
     } catch (error) {
       next(error);

@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { RestriccionAlimentaria } from "../entities/restriccion_alimentaria.entity";
 import { getRestriccionesAlimentarias } from "../services/restriccion_alimentaria.service";
 
-export function useRestriccionesAlimentarias() {
+export function useRestriccionesAlimentarias(tipoRestriccionId?: number) {
   const [restricciones, setRestricciones] = useState<RestriccionAlimentaria[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -11,7 +11,7 @@ export function useRestriccionesAlimentarias() {
     try {
       setLoading(true);
       setError(null);
-      const data = await getRestriccionesAlimentarias();
+      const data = await getRestriccionesAlimentarias(tipoRestriccionId);
       setRestricciones(data);
     } catch (err) {
       setError("Error al cargar restricciones alimentarias");
@@ -22,7 +22,7 @@ export function useRestriccionesAlimentarias() {
 
   useEffect(() => {
     cargar();
-  }, []);
+  }, [tipoRestriccionId]);
 
   return { restricciones, loading, error, recargar: cargar };
 }

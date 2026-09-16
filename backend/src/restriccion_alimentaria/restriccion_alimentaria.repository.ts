@@ -3,7 +3,10 @@ import { RestriccionAlimentaria } from './restriccion_alimentaria.entity.js';
 import { TipoRestriccion } from '../tipo_restriccion/tipo_restriccion.entity.js';
 
 export class RestriccionAlimentariaRepository {
-  async findAll(): Promise<RestriccionAlimentaria[]> {
+  async findAll(tipoRestriccionId?: number): Promise<RestriccionAlimentaria[]> {
+    if (tipoRestriccionId) {
+      return orm.em.find(RestriccionAlimentaria, { tipoRestriccion: { id: tipoRestriccionId } }, { populate: ['tipoRestriccion'] });
+    }
     return orm.em.findAll(RestriccionAlimentaria, { populate: ['tipoRestriccion'] });
   }
 

@@ -1,8 +1,9 @@
 import api from "./axiosConfig";
 import { RestriccionAlimentaria } from "../entities/restriccion_alimentaria.entity";
 
-export const getRestriccionesAlimentarias = async (): Promise<RestriccionAlimentaria[]> => {
-  const res = await api.get("/restricciones-alimentarias");
+export const getRestriccionesAlimentarias = async (tipoRestriccionId?: number): Promise<RestriccionAlimentaria[]> => {
+  const url = tipoRestriccionId ? `/restricciones-alimentarias?tipoRestriccion=${tipoRestriccionId}` : "/restricciones-alimentarias";
+  const res = await api.get(url);
   return res.data;
 };
 

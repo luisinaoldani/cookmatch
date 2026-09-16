@@ -4,9 +4,12 @@ import { deleteRestriccionAlimentaria } from "../../services/restriccion_aliment
 import { RestriccionAlimentaria } from "../../entities/restriccion_alimentaria.entity";
 import RestriccionAlimentariaForm from "./restriccion_alimentariaForm";
 import Button from "../ui/button";
+import { useTiposRestriccion } from "../../hooks/useTipo_restriccion";
 
 function RestriccionAlimentariaList() {
-  const { restricciones, loading, error, recargar } = useRestriccionesAlimentarias();
+  const [tipoFiltro, setTipoFiltro] = useState<number | undefined>(undefined);
+  const { restricciones, loading, error, recargar } = useRestriccionesAlimentarias(tipoFiltro);
+  const { tiposRestriccion } = useTiposRestriccion();
   const [editando, setEditando] = useState<RestriccionAlimentaria | undefined>(undefined);
   const [mostrarForm, setMostrarForm] = useState(false);
 
@@ -32,6 +35,23 @@ function RestriccionAlimentariaList() {
           texto="+ Nueva restricción"
           onClick={() => { setEditando(undefined); setMostrarForm(true); }}
         />
+      </div>
+
+      <div className="flex items-center gap-2 bg-white p-3 rounded border border-ink/10">
+        <label htmlFor="filtro-tipo" className="text-ink/80 font-medium text-sm">Filtrar por tipo:</label>
+        <select
+          id="filtro-tipo"
+          className="border border-ink/20 rounded px-2 py-1 text-sm text-ink outline-none focus:border-basil"
+          value={tipoFiltro || ""}
+          onChange={(e) => setTipoFiltro(e.target.value ? Number(e.target.value) : undefined)}
+        >
+          <option value="">Todos</option>
+          {tiposRestriccion.map((tipo) => (
+            <option key={tipo.id} value={tipo.id}>
+              {tipo.tipo}
+            </option>
+          ))}
+        </select>
       </div>
 
       {mostrarForm && (
