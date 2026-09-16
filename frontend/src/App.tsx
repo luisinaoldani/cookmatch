@@ -9,6 +9,7 @@ import RestriccionesAlimentariasPage from "./pages/restriccion_alimentariaPage";
 import RecetasPage from "./pages/recetaPage";
 import PasosPage from "./pages/pasoPage";
 import BuscarPage from "./pages/buscarPage";
+import RecetaDetallePage from "./pages/recetaDetallePage";
 import "./index.css";
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
         <Route path="/recetas" element={<RecetasPage />} />
         <Route path="/recetas/:recetaId/pasos" element={<PasosPage />} />
         <Route path="/buscar" element={<BuscarPage />} />
+        <Route path="/recetas/:recetaId" element={<RecetaDetallePage />} />
 
       </Routes>
     </Layout>

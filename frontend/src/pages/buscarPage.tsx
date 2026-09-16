@@ -19,6 +19,7 @@ function BuscarPage() {
   };
 
   const recetasConMatch = recetas
+    .filter((r) => r.estado.trim().toLowerCase() === "publicada")
     .map((r) => {
       const totalIngredientes = r.ingredientes?.length ?? 0;
       const coincidencias = r.ingredientes?.filter((ri) =>

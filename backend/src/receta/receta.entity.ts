@@ -42,7 +42,7 @@ export class Receta {
   @Property({ length: 100 })
   estado!: string;
 
-  @OneToMany({ mappedBy: 'receta' })
+  @OneToMany({ mappedBy: 'receta', orderBy: { numero: 'asc' } })
   pasos = new Collection<Paso>(this);
 
   @OneToMany({ mappedBy: 'receta' })
