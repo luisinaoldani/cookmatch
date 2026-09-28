@@ -7,7 +7,7 @@ import { DiaPlanificado, DiaInput, ComidasInput } from "../types/planificacion.t
 const DIAS = ["lunes", "martes", "miercoles", "jueves", "viernes", "sabado", "domingo"];
 const MOMENTOS = ["desayuno", "almuerzo", "merienda", "cena"] as const;
 
-type Asignacion = { dia?: string; momento?: string };
+export type Asignacion = { dia?: string; momento?: string };
 type Asignaciones = Record<number, Asignacion>;
 
 export function usePlanificacion() {

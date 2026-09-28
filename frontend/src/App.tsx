@@ -11,6 +11,7 @@ import PasosPage from "./pages/pasoPage";
 import BuscarPage from "./pages/buscarPage";
 import RecetaDetallePage from "./pages/recetaDetallePage";
 import "./index.css";
+import PlanificacionPage from "./pages/planificacionPage"; 
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
         <Route path="/recetas/:recetaId/pasos" element={<PasosPage />} />
         <Route path="/buscar" element={<BuscarPage />} />
         <Route path="/recetas/:recetaId" element={<RecetaDetallePage />} />
+        <Route path="/planificacion" element={<PlanificacionPage />} />
 
       </Routes>
     </Layout>
