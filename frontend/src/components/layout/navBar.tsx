@@ -9,6 +9,7 @@ const links = [
   { label: "Utensilios", to: "/utensilios" },
   { label: "Tipos de restricción", to: "/tipo-restriccion" },
   { label: "Planificación", to: "/planificacion" },
+  { label: "Recetas por etiqueta", to: "/recetas-por-etiqueta" },
 ];
 
 function Navbar() {
@@ -17,7 +18,7 @@ function Navbar() {
 
   return (
     <header className="sticky top-0 z-40 bg-paper border-b border-ink/10">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between gap-6">
         <Link to="/" className="flex items-center gap-2 font-display font-bold text-xl text-basil">
           <span aria-hidden>♨️</span>
           CookMatch
