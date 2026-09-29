@@ -7,13 +7,17 @@ import { DiaPlanificado, DiaInput, ComidasInput } from "../types/planificacion.t
 const DIAS = ["lunes", "martes", "miercoles", "jueves", "viernes", "sabado", "domingo"];
 const MOMENTOS = ["desayuno", "almuerzo", "merienda", "cena"] as const;
 
-export type Asignacion = { dia?: string; momento?: string };
-type Asignaciones = Record<number, Asignacion>;
+export type Fila = {
+  id: string;
+  recetaId?: number;
+  dia?: string;
+  momento?: string;
+};
 
 export function usePlanificacion() {
   const [recetas, setRecetas] = useState<Receta[]>([]);
   const [loadingRecetas, setLoadingRecetas] = useState(true);
-  const [asignaciones, setAsignaciones] = useState<Asignaciones>({});
+  const [filas, setFilas] = useState<Fila[]>([]);
   const [resultado, setResultado] = useState<DiaPlanificado[] | null>(null);
   const [loadingGenerar, setLoadingGenerar] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -24,19 +28,25 @@ export function usePlanificacion() {
       .finally(() => setLoadingRecetas(false));
   }, []);
 
-  const asignar = (recetaId: number, campo: "dia" | "momento", valor: string) => {
-    setAsignaciones((prev) => {
-      const nuevaAsignacion = { ...prev[recetaId], [campo]: valor };
-      const actualizado: Asignaciones = { ...prev, [recetaId]: nuevaAsignacion };
+  const agregarFila = () => {
+    setFilas((prev) => [...prev, { id: crypto.randomUUID() }]);
+  };
 
-      if (nuevaAsignacion.dia && nuevaAsignacion.momento) {
-        for (const [idStr, asign] of Object.entries(actualizado)) {
-          const id = Number(idStr);
-          if (id === recetaId) continue;
-          if (asign.dia === nuevaAsignacion.dia && asign.momento === nuevaAsignacion.momento) {
-            actualizado[id] = {};
-          }
-        }
+  const eliminarFila = (filaId: string) => {
+    setFilas((prev) => prev.filter((f) => f.id !== filaId));
+  };
+
+  const actualizarFila = (filaId: string, campo: "recetaId" | "dia" | "momento", valor: string | number) => {
+    setFilas((prev) => {
+      let actualizado = prev.map((f) => (f.id === filaId ? { ...f, [campo]: valor } : f));
+
+      const filaActual = actualizado.find((f) => f.id === filaId)!;
+      if (filaActual.dia && filaActual.momento) {
+        actualizado = actualizado.map((f) =>
+          f.id !== filaId && f.dia === filaActual.dia && f.momento === filaActual.momento
+            ? { ...f, dia: undefined, momento: undefined }
+            : f
+        );
       }
 
       return actualizado;
@@ -47,9 +57,7 @@ export function usePlanificacion() {
     const faltantes: string[] = [];
     for (const dia of DIAS) {
       for (const momento of MOMENTOS) {
-        const hayAlguna = Object.values(asignaciones).some(
-          (a) => a.dia === dia && a.momento === momento
-        );
+        const hayAlguna = filas.some((f) => f.dia === dia && f.momento === momento && f.recetaId);
         if (!hayAlguna) faltantes.push(`${dia} - ${momento}`);
       }
     }
@@ -66,10 +74,8 @@ export function usePlanificacion() {
     const dias: DiaInput[] = DIAS.map((dia) => {
       const comidas = {} as ComidasInput;
       for (const momento of MOMENTOS) {
-        const entry = Object.entries(asignaciones).find(
-          ([, a]) => a.dia === dia && a.momento === momento
-        );
-        comidas[momento] = Number(entry![0]);
+        const fila = filas.find((f) => f.dia === dia && f.momento === momento);
+        comidas[momento] = fila!.recetaId!;
       }
       return { dia, comidas };
     });
@@ -86,5 +92,9 @@ export function usePlanificacion() {
     }
   };
 
-  return { recetas, loadingRecetas, asignaciones, asignar, calcularFaltantes, generar, resultado, loadingGenerar, error };
+  return {
+    recetas, loadingRecetas,
+    filas, agregarFila, actualizarFila, eliminarFila,
+    calcularFaltantes, generar, resultado, loadingGenerar, error,
+  };
 }

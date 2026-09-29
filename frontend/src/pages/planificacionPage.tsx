@@ -1,5 +1,5 @@
 import { usePlanificacion } from "../hooks/usePlanificacion";
-import RecetaAsignacionRow from "../components/planificacion/recetaAsignacionRow";
+import FilaAsignacion from "../components/planificacion/filaAsignacion";
 import Button from "../components/ui/button";
 
 const DIAS_LABEL: Record<string, string> = {
@@ -8,7 +8,11 @@ const DIAS_LABEL: Record<string, string> = {
 };
 
 function PlanificacionPage() {
-  const { recetas, loadingRecetas, asignaciones, asignar, generar, resultado, loadingGenerar, error } = usePlanificacion();
+  const {
+    recetas, loadingRecetas,
+    filas, agregarFila, actualizarFila, eliminarFila,
+    generar, resultado, loadingGenerar, error,
+  } = usePlanificacion();
 
   if (loadingRecetas) return <p className="text-ink/50">Cargando recetas...</p>;
 
@@ -17,15 +21,18 @@ function PlanificacionPage() {
       <h1 className="font-display font-bold text-2xl text-ink">Planificación semanal</h1>
 
       <div className="flex flex-col gap-2">
-        {recetas.map((receta) => (
-          <RecetaAsignacionRow
-            key={receta.id}
-            receta={receta}
-            asignacion={asignaciones[receta.id!]}
-            onAsignar={asignar}
+        {filas.map((fila) => (
+          <FilaAsignacion
+            key={fila.id}
+            fila={fila}
+            recetas={recetas}
+            onActualizar={actualizarFila}
+            onEliminar={eliminarFila}
           />
         ))}
       </div>
+
+      <Button texto="+ Agregar asignación" variant="secondary" onClick={agregarFila} />
 
       <Button
         texto={loadingGenerar ? "Generando..." : "Generar planificación"}
