@@ -5,17 +5,24 @@ import { getRecetaByCodigo } from "../services/receta.service";
 import Card from "../components/ui/card";
 
 function RecetaDetallePage() {
-  const { id } = useParams();
+  const { recetaId } = useParams();
   const [receta, setReceta] = useState<Receta | undefined>(undefined);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    // 1. Validación para proteger la ruta, si no hay ID o no es un número, cancela la petición
+    if (!recetaId || isNaN(Number(recetaId))) {
+      setLoading(false);
+      return;
+    }
+
+    // 2. Si el ID es válido, hace la petición al backend
     setLoading(true);
-    getRecetaByCodigo(Number(id))
+    getRecetaByCodigo(Number(recetaId))
       .then((r) => setReceta(r))
       .catch(() => setReceta(undefined))
       .finally(() => setLoading(false));
-  }, [id]);
+  }, [recetaId]);
 
   if (loading) return <p className="text-ink/50">Cargando...</p>;
   if (!receta) return <p className="text-tomato">Receta no encontrada.</p>;

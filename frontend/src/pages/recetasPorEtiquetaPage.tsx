@@ -23,6 +23,7 @@ function RecetasPorEtiquetaPage() {
         setLoading(true);
         setError(null);
         const data = await getRecetas(seleccionadas);
+        console.log("🔍 Recetas recibidas:", data); 
         setRecetas(data);
       } catch {
         setError("Error al buscar recetas");
