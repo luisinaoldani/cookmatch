@@ -6,17 +6,35 @@ import type { Etiqueta } from '../etiqueta/etiqueta.entity.js';
 import type { Utensilio } from '../utensilio/utensilio.entity.js';
 import type { RestriccionAlimentaria } from '../restriccion_alimentaria/restriccion_alimentaria.entity.js';
 
+// Forma de cada ingrediente que llega en el body al crear/actualizar una receta:
+// se elige un Ingrediente que ya existe en el catálogo (por id) y se indica
+// cuánto lleva la receta.
+export interface RecetaIngredienteInput {
+  ingrediente: { id: number };
+  cantidad: number;
+  unidadMedida: string;
+}
+
+// Forma de cada paso que llega en el body: solo la descripción. El número
+// no se manda nunca: lo asigna el repository según el orden del arreglo
+// (el primero es el paso 1, el segundo el paso 2, etc.).
+export interface RecetaPasoInput {
+  descripcion: string;
+}
+
 export interface RecetaProps {
   nombre: string; // la columna admite NULL en la base real
   dificultad: string;
   tiempoMin: number;
   estado: string;
-  // pasos e ingredientes NO se cargan desde acá: cada uno se crea por su
-  // propio endpoint (PasoController / RecetaIngredienteController) y queda
-  // enlazado por su FK a receta. Quedan tipados por compatibilidad con el
-  // Service, pero el repository los ignora al crear/actualizar una receta.
-  pasos?: Paso[];
-  ingredientes?: RecetaIngrediente[];
+  // pasos sí se resuelven acá, igual que los ingredientes: el repository
+  // crea/actualiza/borra las filas de Paso en el mismo flush() que la receta.
+  // El orden del arreglo define el número de paso.
+  pasos?: RecetaPasoInput[];
+  // ingredientes sí se resuelven acá: el repository crea/actualiza/borra las
+  // filas de RecetaIngrediente en el mismo flush() que la receta, así que se
+  // guarda todo o no se guarda nada.
+  ingredientes?: RecetaIngredienteInput[];
   // etiquetas/utensilios sí se resuelven acá: son M:N sin datos propios
   // así que alcanza con mandar los ids en el body
   etiquetas?: { id: number }[];
@@ -63,12 +81,14 @@ export class Receta {
   @ManyToMany()
   restricciones = new Collection<RestriccionAlimentaria>(this);
 
-  // Buffers transitorios (no decorados, no se persisten): guardan los ids
+  // Buffers transitorios (no decorados, no se persisten): guardan los datos
   // crudos que llegaron del body para que el repository arme las
   // referencias con em.getReference() antes del flush().
   etiquetasInput?: { id: number }[];
   utensiliosInput?: { id: number }[];
   restriccionesInput?: { id: number }[];
+  ingredientesInput?: RecetaIngredienteInput[];
+  pasosInput?: RecetaPasoInput[];
 
   constructor(props?: RecetaProps) {
     if (props) {
@@ -79,6 +99,8 @@ export class Receta {
       this.etiquetasInput = props.etiquetas;
       this.utensiliosInput = props.utensilios;
       this.restriccionesInput = props.restricciones;
+      this.ingredientesInput = props.ingredientes;
+      this.pasosInput = props.pasos;
     }
   }
 }

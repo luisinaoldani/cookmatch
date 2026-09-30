@@ -1,7 +1,7 @@
 import { IngredienteRepository } from './ingrediente.repository.js';
 import { Ingrediente } from './ingrediente.entity.js';
 import type { IngredienteInput } from './ingrediente.schema.js';
-import { NotFoundError } from '../shared/errors.js'; //Agrega la importación de NotFoundError desde el archivo de errores compartidos para manejar casos donde un ingrediente no se encuentra en la base de datos.
+import { BadRequestError, NotFoundError } from '../shared/errors.js'; //Agrega la importación de NotFoundError desde el archivo de errores compartidos para manejar casos donde un ingrediente no se encuentra en la base de datos.
 
 const repository = new IngredienteRepository();
 
@@ -19,6 +19,11 @@ export class IngredienteService {
   }
 
   async create(data: IngredienteInput): Promise<Ingrediente> {
+    const duplicado = await repository.findByNombre(data.nombre);
+    if (duplicado) {
+      throw new BadRequestError('Ya existe un ingrediente con ese nombre');
+    }
+
     const nuevoIngrediente = new Ingrediente({ nombre: data.nombre });
     return repository.create(nuevoIngrediente);
   }
@@ -28,6 +33,14 @@ export class IngredienteService {
     if (!existente) {
       throw new NotFoundError('Ingrediente no encontrado');
     }
+
+    // Si el nombre ya lo tiene OTRO ingrediente es un duplicado; si lo tiene
+    // este mismo (por ejemplo, se guarda sin cambiar el nombre) no hay problema.
+    const duplicado = await repository.findByNombre(data.nombre);
+    if (duplicado && duplicado.id !== id) {
+      throw new BadRequestError('Ya existe un ingrediente con ese nombre');
+    }
+
     const actualizada = new Ingrediente({ nombre: data.nombre });
     await repository.update(id, actualizada);
     return actualizada;

@@ -12,7 +12,10 @@ export class Ingrediente {
   @PrimaryKey()
   id!: number;
 
-  @Property({ length: 100 })
+  // unique: no puede haber dos ingredientes con el mismo nombre en el catálogo.
+  // Es la última defensa: el Service ya chequea antes de guardar para dar un
+  // mensaje claro, pero el índice único cubre el caso de dos requests simultáneos.
+  @Property({ length: 100, unique: true })
   nombre!: string;
 
   // El constructor con props opcionales cumple dos roles: permite

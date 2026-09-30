@@ -3,6 +3,8 @@ import { Receta } from './receta.entity.js';
 import { Etiqueta } from '../etiqueta/etiqueta.entity.js';
 import { Utensilio } from '../utensilio/utensilio.entity.js';
 import { RestriccionAlimentaria } from '../restriccion_alimentaria/restriccion_alimentaria.entity.js';
+import { RecetaIngredienteRepository } from '../receta_ingrediente/receta_ingrediente.repository.js';
+import { PasoRepository } from '../paso/paso.repository.js';
 
 // Acá se devuelve la receta completa: pasos, ingredientes con su Ingrediente, etiquetas, utensilios
 // y restricciones que cumple, porque es lo que se muestra en el detalle.
@@ -16,6 +18,12 @@ const POPULATE = [
 ] as const;
 
 export class RecetaRepository {
+  // La receta es la dueña de sus pasos e ingredientes, pero cómo se arma cada
+  // uno (numeración, referencias, diferencias al editar) lo resuelve el
+  // repository de cada entidad. Acá solo se orquestan y se hace el flush().
+  private pasoRepository = new PasoRepository();
+  private recetaIngredienteRepository = new RecetaIngredienteRepository();
+
   async findAll(): Promise<Receta[]> {
     return orm.em.findAll(Receta, { populate: POPULATE });
   }
@@ -86,6 +94,9 @@ export class RecetaRepository {
     return orm.em.find(Receta, { id: { $in: ids } }, { populate: POPULATE });
   }
 
+  // La receta, sus ingredientes y sus pasos se persisten en un único flush(): MikroORM
+  // lo ejecuta dentro de una transacción, así que si algo falla (por ejemplo
+  // un id de ingrediente inexistente) no queda una receta a medias.
   async create(receta: Receta): Promise<Receta> {
     const nueva = orm.em.create(Receta, {
       nombre: receta.nombre,
@@ -94,6 +105,8 @@ export class RecetaRepository {
       estado: receta.estado,
     });
     this.setRelacionesMN(nueva, receta);
+    this.recetaIngredienteRepository.crearVariosSinGuardar(nueva, receta.ingredientesInput ?? []);
+    this.pasoRepository.crearVariosSinGuardar(nueva, receta.pasosInput ?? []);
     await orm.em.flush();
     return nueva;
   }
@@ -106,6 +119,14 @@ export class RecetaRepository {
     existente.tiempoMin = receta.tiempoMin;
     existente.estado = receta.estado;
     this.setRelacionesMN(existente, receta);
+    // Si el body no trae ingredientes, no se toca lo que la receta ya tiene.
+    if (receta.ingredientesInput) {
+      await this.recetaIngredienteRepository.reemplazarSinGuardar(existente, receta.ingredientesInput);
+    }
+    // Si el body no trae pasos, no se tocan.
+    if (receta.pasosInput) {
+      await this.pasoRepository.reemplazarSinGuardar(existente, receta.pasosInput);
+    }
     await orm.em.flush();
     return true;
   }

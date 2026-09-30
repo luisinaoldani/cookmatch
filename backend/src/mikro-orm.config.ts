@@ -39,7 +39,7 @@ export default defineConfig({
     pathTs: 'src/migrations',
   },
 
-  // Imprime cada SQL generado. Apagarlo recién cuando el equipo se sienta
+  // Muestra cada SQL generado en consola. Apagarlo recién cuando el equipo se sienta
   // cómodo leyendo lo que el ORM genera, no antes.
   debug: true,
 });

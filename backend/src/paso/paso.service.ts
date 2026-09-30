@@ -6,8 +6,8 @@ import { NotFoundError } from '../shared/errors.js'; //Agrega la importación de
 const repository = new PasoRepository();
 
 export class PasoService {
-  async getAll(): Promise<Paso[]> {
-    return repository.findAll();
+  async getAll(idReceta?: number): Promise<Paso[]> {
+    return repository.findAll(idReceta);
   }
 
   async getById(idReceta: number, numero: number): Promise<Paso> {

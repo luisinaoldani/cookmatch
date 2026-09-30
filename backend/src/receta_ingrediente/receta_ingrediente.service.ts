@@ -2,7 +2,7 @@ import { RecetaIngredienteRepository } from './receta_ingrediente.repository.js'
 import { RecetaIngrediente } from './receta_ingrediente.entity.js';
 import type { Receta } from '../receta/receta.entity.js';
 import type { RecetaIngredienteCreateInput, RecetaIngredienteUpdateInput } from './receta_ingrediente.schema.js';
-import { NotFoundError } from '../shared/errors.js'; //Agrega la importación de NotFoundError desde el archivo de errores compartidos para manejar casos donde una relación receta-ingrediente no se encuentra en la base de datos.
+import { BadRequestError, NotFoundError } from '../shared/errors.js'; //Agrega la importación de NotFoundError desde el archivo de errores compartidos para manejar casos donde una relación receta-ingrediente no se encuentra en la base de datos.
 
 const repository = new RecetaIngredienteRepository();
 
@@ -20,6 +20,13 @@ export class RecetaIngredienteService {
   }
 
   async create(data: RecetaIngredienteCreateInput): Promise<RecetaIngrediente> {
+    // La clave es (receta, ingrediente): si ya existe el par, la base rechazaría
+    // el insert con un error genérico. Se chequea antes para avisar con un mensaje claro.
+    const existente = await repository.findById(data.receta.id, data.ingrediente.id);
+    if (existente) {
+      throw new BadRequestError('La receta ya tiene ese ingrediente');
+    }
+
     const nuevoItem = new RecetaIngrediente({
       receta: data.receta as Receta,
       ingrediente: data.ingrediente as any,
