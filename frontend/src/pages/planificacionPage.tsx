@@ -11,7 +11,7 @@ function PlanificacionPage() {
   const {
     recetas, loadingRecetas,
     filas, agregarFila, actualizarFila, eliminarFila,
-    generar, resultado, loadingGenerar, error,
+    generar, resultado, loadingGenerar, error, descargarExcel
   } = usePlanificacion();
 
   if (loadingRecetas) return <p className="text-ink/50">Cargando recetas...</p>;
@@ -44,7 +44,10 @@ function PlanificacionPage() {
 
       {resultado && (
         <div className="flex flex-col gap-3 mt-4">
-          <h2 className="font-display font-bold text-xl text-ink">Tu semana</h2>
+          <div className="flex justify-between items-center">
+            <h2 className="font-display font-bold text-xl text-ink">Tu semana</h2>
+            <Button texto="Descargar Excel" variant="secondary" onClick={descargarExcel} />
+          </div>
           {resultado.map((dia) => (
             <div key={dia.dia} className="bg-white p-3 rounded border border-ink/10">
               <p className="font-medium text-ink capitalize">{DIAS_LABEL[dia.dia] ?? dia.dia}</p>
