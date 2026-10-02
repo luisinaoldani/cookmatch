@@ -13,8 +13,7 @@
 
 ### Repositorios
 
-- [frontend app](link)
-- [backend app](link)
+[fullstack app](https://github.com/luisinaoldani/cookmatch)
 
 ## Tema
 
