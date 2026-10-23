@@ -25,7 +25,7 @@ function Navbar() {
         </Link>
 
         {/* Nav desktop */}
-        <nav className="hidden md:flex items-center gap-6 font-medium text-sm">
+        <nav className="hidden lg:flex items-center gap-6 font-medium text-sm">
           {links.map((l) => (
             <Link key={l.to} to={l.to} className="text-ink/70 hover:text-basil transition-colors">
               {l.label}
@@ -35,14 +35,14 @@ function Navbar() {
 
         <button
           onClick={() => navigate("/buscar")}
-          className="hidden md:inline-flex bg-tomato text-white font-display font-medium text-sm px-4 py-2 rounded-full hover:opacity-90 transition"
+          className="hidden lg:inline-flex bg-tomato text-white font-display font-medium text-sm px-4 py-2 rounded-full hover:opacity-90 transition"
         >
           ¿Qué cocino?
         </button>
 
         {/* Botón mobile */}
         <button
-          className="md:hidden text-ink"
+          className="lg:hidden text-ink"
           onClick={() => setMenuAbierto(!menuAbierto)}
           aria-label="Abrir menú"
         >
@@ -52,7 +52,7 @@ function Navbar() {
 
       {/* Menú mobile */}
       {menuAbierto && (
-        <nav className="md:hidden flex flex-col gap-1 px-4 pb-4 font-medium text-sm">
+        <nav className="lg:hidden flex flex-col gap-1 px-4 pb-4 font-medium text-sm">
           {links.map((l) => (
             <Link
               key={l.to}

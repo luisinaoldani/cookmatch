@@ -29,9 +29,9 @@ const selectClase = "border border-ink/20 rounded px-2 py-1 text-sm text-ink out
 
 function FilaAsignacion({ fila, recetas, onActualizar, onEliminar }: FilaAsignacionProps) {
   return (
-    <div className="flex items-center gap-3 bg-white p-3 rounded border border-ink/10">
+    <div className="flex flex-col gap-3 bg-white p-3 rounded border border-ink/10 sm:flex-row sm:items-center">
       <select
-        className={selectClase + " flex-1"}
+        className={selectClase + " w-full sm:w-auto sm:flex-1"}
         value={fila.recetaId ?? ""}
         onChange={(e) => onActualizar(fila.id, "recetaId", Number(e.target.value))}
       >
@@ -42,7 +42,7 @@ function FilaAsignacion({ fila, recetas, onActualizar, onEliminar }: FilaAsignac
       </select>
 
       <select
-        className={selectClase}
+        className={selectClase + " w-full sm:w-auto"}
         value={fila.dia ?? ""}
         onChange={(e) => onActualizar(fila.id, "dia", e.target.value)}
       >
@@ -53,7 +53,7 @@ function FilaAsignacion({ fila, recetas, onActualizar, onEliminar }: FilaAsignac
       </select>
 
       <select
-        className={selectClase}
+        className={selectClase + " w-full sm:w-auto"}
         value={fila.momento ?? ""}
         onChange={(e) => onActualizar(fila.id, "momento", e.target.value)}
       >
@@ -63,7 +63,7 @@ function FilaAsignacion({ fila, recetas, onActualizar, onEliminar }: FilaAsignac
         ))}
       </select>
 
-      <button onClick={() => onEliminar(fila.id)} className="text-tomato text-sm hover:underline whitespace-nowrap">
+      <button onClick={() => onEliminar(fila.id)} className="text-tomato text-sm hover:underline whitespace-nowrap self-end sm:self-auto">
         Quitar
       </button>
     </div>
