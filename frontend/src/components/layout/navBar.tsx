@@ -8,6 +8,7 @@ const links = [
   { label: "Etiquetas", to: "/etiquetas" },
   { label: "Utensilios", to: "/utensilios" },
   { label: "Tipos de restricción", to: "/tipo-restriccion" },
+  { label: "Restricciones alimentarias", to: "/restricciones-alimentarias" },
   { label: "Planificación", to: "/planificacion" },
   { label: "Recetas por etiqueta", to: "/recetas-por-etiqueta" },
 ];
@@ -25,7 +26,7 @@ function Navbar() {
         </Link>
 
         {/* Nav desktop */}
-        <nav className="hidden lg:flex items-center gap-6 font-medium text-sm">
+        <nav className="hidden lg:flex items-center gap-4 font-medium text-sm">
           {links.map((l) => (
             <Link key={l.to} to={l.to} className="text-ink/70 hover:text-basil transition-colors">
               {l.label}
