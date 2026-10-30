@@ -4,6 +4,8 @@ Aplicación web para la gestión y búsqueda de recetas de cocina.
 
 [Documentación del proyecto](docs/README.md)
 
+[Video demostrativo del funcionamiento de la aplicación](https://drive.google.com/file/d/18SUpmUAbhXfaAOZxLLX1AnUzu6ALGn_a/view?usp=sharing)
+
 # Instrucciones de instalación
 
 ## Requisitos
