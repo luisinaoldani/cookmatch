@@ -1,4 +1,3 @@
-// src/components/utensilio/UtensilioList.tsx
 import { useState } from "react";
 import { useUtensilios } from "../../hooks/useUtensilio";
 import { deleteUtensilio } from "../../services/utensilio.service";

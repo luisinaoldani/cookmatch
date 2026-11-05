@@ -10,9 +10,7 @@ export class IngredienteRepository {
     return orm.em.findOne(Ingrediente, { id });
   }
 
-  // Sirve para evitar duplicados en el catálogo. La comparación la hace MySQL
-  // con el collation de la columna, que por defecto ignora mayúsculas y
-  // acentos: "tomate", "Tomate" y "TOMATE" cuentan como el mismo nombre.
+
   async findByNombre(nombre: string): Promise<Ingrediente | null> {
     return orm.em.findOne(Ingrediente, { nombre });
   }

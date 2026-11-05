@@ -1,7 +1,7 @@
 import { PasoRepository } from './paso.repository.js';
 import { Paso } from './paso.entity.js';
 import type { PasoCreateInput, PasoUpdateInput } from './paso.schema.js';
-import { NotFoundError } from '../shared/errors.js'; //Agrega la importación de NotFoundError desde el archivo de errores compartidos para manejar casos donde un paso no se encuentra en la base de datos.
+import { NotFoundError } from '../shared/errors.js'; 
 
 const repository = new PasoRepository();
 

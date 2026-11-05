@@ -14,9 +14,7 @@ export class PlanificacionService {
       d.comidas.cena,
     ]);
 
-    // Set es una colección de JS que no permite duplicados. Si le pasás un array, arma la versión 
-    // "sin repetidos"  pero el resultado es un Set, no un array.
-    // El operador ... (spread) toma los elementos de un iterable y los vuelca en un array nuevo.
+   
     const idsUnicos = [...new Set(idsConRepetidos)];
 
     const recetas = await recetaRepository.findByIds(idsUnicos);

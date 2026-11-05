@@ -1,7 +1,7 @@
 import { IngredienteRepository } from './ingrediente.repository.js';
 import { Ingrediente } from './ingrediente.entity.js';
 import type { IngredienteInput } from './ingrediente.schema.js';
-import { BadRequestError, NotFoundError } from '../shared/errors.js'; //Agrega la importación de NotFoundError desde el archivo de errores compartidos para manejar casos donde un ingrediente no se encuentra en la base de datos.
+import { BadRequestError, NotFoundError } from '../shared/errors.js'; 
 
 const repository = new IngredienteRepository();
 
@@ -34,8 +34,7 @@ export class IngredienteService {
       throw new NotFoundError('Ingrediente no encontrado');
     }
 
-    // Si el nombre ya lo tiene OTRO ingrediente es un duplicado; si lo tiene
-    // este mismo (por ejemplo, se guarda sin cambiar el nombre) no hay problema.
+  
     const duplicado = await repository.findByNombre(data.nombre);
     if (duplicado && duplicado.id !== id) {
       throw new BadRequestError('Ya existe un ingrediente con ese nombre');

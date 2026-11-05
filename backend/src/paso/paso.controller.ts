@@ -7,8 +7,6 @@ const service = new PasoService();
 export class PasoController {
   async getAll(req: Request, res: Response, next: NextFunction) {
     try {
-      // GET /pasos?idReceta=3 devuelve solo los pasos de la receta 3.
-      // Sin el parámetro devuelve todos, como antes.
       const idReceta =
         req.query.idReceta !== undefined ? Number(req.query.idReceta) : undefined;
 

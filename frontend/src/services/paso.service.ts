@@ -2,7 +2,7 @@ import api from "./axiosConfig";
 import { Paso } from "../entities/paso.entity";
 
 export const getPasosByReceta = async (recetaId: number): Promise<Paso[]> => {
-  const res = await api.get(`/pasos?idReceta=${recetaId}`); // confirmar con el back si filtra por query param
+  const res = await api.get(`/pasos?idReceta=${recetaId}`); 
   return res.data;
 };
 

@@ -3,7 +3,7 @@ import { Etiqueta } from "../entities/etiqueta.entity";
 
 export const getEtiquetas = async (): Promise<Etiqueta[]> => {
   const res = await api.get("/etiquetas");
-  console.log("Respuesta del back (getEtiquetas):", res.data); // temporal, para confirmar el formato real
+  console.log("Respuesta del back (getEtiquetas):", res.data); 
   return res.data;
 };
 

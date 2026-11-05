@@ -16,16 +16,12 @@ interface RecetaFormProps {
   onCancelar?: () => void;
 }
 
-// Una fila del formulario: un ingrediente del catálogo (por id) con su
-// cantidad y unidad. Todo va como string porque son valores de inputs;
-// se convierte a número recién al enviar.
 interface FilaIngrediente {
   ingredienteId: string;
   cantidad: string;
   unidadMedida: string;
 }
 
-// Acepta "1,5" además de "1.5", porque en español se suele escribir con coma.
 const parseCantidad = (valor: string) => Number(valor.replace(",", "."));
 
 function RecetaForm({ recetaEditar, onGuardado, onCancelar }: RecetaFormProps) {
@@ -42,7 +38,6 @@ function RecetaForm({ recetaEditar, onGuardado, onCancelar }: RecetaFormProps) {
   const [utensiliosSeleccionados, setUtensiliosSeleccionados] = useState<number[]>([]);
   const [restriccionesSeleccionadas, setRestriccionesSeleccionadas] = useState<number[]>([]);
   const [filasIngredientes, setFilasIngredientes] = useState<FilaIngrediente[]>([]);
-  // Descripciones de los pasos en orden: la posición define el número de paso.
   const [pasosTexto, setPasosTexto] = useState<string[]>([]);
   const [mostrarNuevoIngrediente, setMostrarNuevoIngrediente] = useState(false);
   const [nombreNuevoIngrediente, setNombreNuevoIngrediente] = useState("");
@@ -121,7 +116,6 @@ function RecetaForm({ recetaEditar, onGuardado, onCancelar }: RecetaFormProps) {
     setPasosTexto((prev) => prev.filter((_, i) => i !== indice));
   };
 
-  // Intercambia el paso con el de arriba (-1) o el de abajo (+1).
   const moverPaso = (indice: number, direccion: -1 | 1) => {
     setPasosTexto((prev) => {
       const destino = indice + direccion;
@@ -132,14 +126,10 @@ function RecetaForm({ recetaEditar, onGuardado, onCancelar }: RecetaFormProps) {
     });
   };
 
-  // Ids ya elegidos en alguna fila: se ocultan en las otras filas para que
-  // no se pueda repetir un ingrediente en la misma receta.
   const idsUsados = filasIngredientes
     .filter((f) => f.ingredienteId !== "")
     .map((f) => Number(f.ingredienteId));
 
-  // Deja el ingrediente elegido en la primera fila vacía; si no hay ninguna,
-  // agrega una fila nueva con ese ingrediente ya seleccionado.
   const asignarIngredienteAFila = (ingredienteId: string) => {
     setFilasIngredientes((prev) => {
       const indiceVacio = prev.findIndex((f) => f.ingredienteId === "");
@@ -163,8 +153,6 @@ function RecetaForm({ recetaEditar, onGuardado, onCancelar }: RecetaFormProps) {
       return;
     }
 
-    // Si ya está en el catálogo (sin distinguir mayúsculas) no se crea otro:
-    // se usa el que existe. El backend igual rechaza duplicados como última defensa.
     const existente = catalogoIngredientes.find(
       (i) => i.nombre.trim().toLowerCase() === nombreLimpio.toLowerCase()
     );
@@ -226,7 +214,6 @@ function RecetaForm({ recetaEditar, onGuardado, onCancelar }: RecetaFormProps) {
         cantidad: parseCantidad(f.cantidad),
         unidadMedida: f.unidadMedida.trim(),
       }));
-      // El número de paso no se manda: el backend lo asigna según el orden.
       const pasosPayload = pasosTexto.map((texto) => ({ descripcion: texto.trim() }));
 
       if (esEdicion && recetaEditar?.id !== undefined) {
@@ -238,12 +225,7 @@ function RecetaForm({ recetaEditar, onGuardado, onCancelar }: RecetaFormProps) {
           etiquetas: etiquetasPayload as any,
           utensilios: utensiliosPayload as any,
           restricciones: restriccionesPayload as any,
-          // Solo se manda si la receta llegó con sus ingredientes cargados:
-          // el backend reemplaza la lista completa, así que mandar [] por
-          // error (porque no se cargaron) borraría los que ya tenía.
           ...(recetaEditar.ingredientes !== undefined && { ingredientes: ingredientesPayload as any }),
-          // Igual que con los ingredientes: el backend reemplaza la lista de
-          // pasos completa, así que solo se manda si la receta los trajo cargados.
           ...(recetaEditar.pasos !== undefined && { pasos: pasosPayload as any }),
         });
       } else {
@@ -430,7 +412,6 @@ function RecetaForm({ recetaEditar, onGuardado, onCancelar }: RecetaFormProps) {
               <input
                 value={nombreNuevoIngrediente}
                 onChange={(e) => setNombreNuevoIngrediente(e.target.value)}
-                // Enter crea el ingrediente en vez de enviar el formulario de la receta.
                 onKeyDown={(e) => {
                   if (e.key === "Enter") {
                     e.preventDefault();

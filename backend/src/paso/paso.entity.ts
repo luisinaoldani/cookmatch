@@ -4,7 +4,7 @@ import type { Receta } from '../receta/receta.entity.js';
 export interface PasoProps {
   idReceta?: number;
   receta?: Receta;
-  numero?: number; // lo calcula el repository al crear, no hace falta mandarlo
+  numero?: number;
   descripcion: string;
 }
 
@@ -24,8 +24,6 @@ export class Paso {
       if (props.receta) {
         this.receta = props.receta;
       } else if (props.idReceta !== undefined) {
-        // Referencia "liviana": alcanza con el id para que el repository
-        // arme la referencia real con em.getReference() antes de persistir.
         this.receta = { id: props.idReceta } as Receta;
       }
       if (props.numero !== undefined) this.numero = props.numero;
@@ -33,8 +31,6 @@ export class Paso {
     }
   }
 
-  // Getter de compatibilidad: el resto del código (service, controller)
-  // sigue leyendo `paso.idReceta` como un número.
   get idReceta(): number | undefined {
     return this.receta?.id;
   }
