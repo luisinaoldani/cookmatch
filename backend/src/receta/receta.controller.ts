@@ -25,9 +25,6 @@ export class RecetaController {
     }
   }
 
-  // devuelve [] si el parámetro no vino (sin filtro),
-  // null si vino pero es inválido (para poder devolver 400),
-  // o la lista de ids parseados si está bien.
   private parseIds(param: unknown): number[] | null {
     if (typeof param !== 'string' || param.trim() === '') return [];
     const ids = param

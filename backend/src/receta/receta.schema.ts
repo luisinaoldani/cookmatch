@@ -4,8 +4,6 @@ const idRef = z.object({
   id: z.number().int().positive(),
 });
 
-// Cada ingrediente de la receta: uno que ya existe en el catálogo (por id)
-// más la cantidad y la unidad de medida.
 const recetaIngredienteItem = z.object({
   ingrediente: idRef,
   cantidad: z.number({ message: 'La cantidad del ingrediente es obligatoria' }).positive(),
@@ -16,8 +14,6 @@ const recetaIngredienteItem = z.object({
     .max(100, 'La unidad de medida no puede superar los 100 caracteres'),
 });
 
-// Cada paso de la receta: solo la descripción. El número lo asigna el backend
-// según la posición en el arreglo.
 const recetaPasoItem = z.object({
   descripcion: z
     .string({ message: 'La descripción del paso es obligatoria' })
@@ -43,15 +39,7 @@ export const recetaSchema = z.object({
     .trim()
     .min(1, 'El estado de la receta es obligatorio')
     .max(100, 'El estado no puede superar los 100 caracteres'),
-  // pasos: si no viene, el repository no toca los que ya tiene la receta;
-  // si viene (aunque sea []), reemplaza la lista completa. El orden del
-  // arreglo define el número de cada paso (1, 2, 3...).
   pasos: z.array(recetaPasoItem).optional(),
-  //
-  // ingredientes: si no viene, el repository no toca los que ya tiene la
-  // receta; si viene (aunque sea []), reemplaza la lista completa.
-  // La clave de RecetaIngrediente es (receta, ingrediente), así que el mismo
-  // ingrediente no puede repetirse en la lista.
   ingredientes: z
     .array(recetaIngredienteItem)
     .refine(

@@ -1,7 +1,7 @@
 import { TipoRestriccionRepository } from './tipo_restriccion.repository.js';
 import { TipoRestriccion } from './tipo_restriccion.entity.js';
 import type { TipoRestriccionInput } from './tipo_restriccion.schema.js';
-import { NotFoundError } from '../shared/errors.js'; //Agrega la importación de NotFoundError desde el archivo de errores compartidos para manejar casos donde un tipo de restricción no se encuentra en la base de datos.
+import { NotFoundError } from '../shared/errors.js';
 
 const repository = new TipoRestriccionRepository();
 

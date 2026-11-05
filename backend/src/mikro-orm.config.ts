@@ -29,17 +29,12 @@ export default defineConfig({
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
 
-  // Lee los tipos desde los .ts (necesario porque corremos con tsx/esbuild,
-  // que no emite emitDecoratorMetadata).
   metadataProvider: TsMorphMetadataProvider,
 
-  // Dónde vive cada migración generada y compilada.
   migrations: {
     path: 'dist/migrations',
     pathTs: 'src/migrations',
   },
 
-  // Muestra cada SQL generado en consola. Apagarlo recién cuando el equipo se sienta
-  // cómodo leyendo lo que el ORM genera, no antes.
   debug: true,
 });

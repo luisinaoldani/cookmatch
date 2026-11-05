@@ -8,6 +8,4 @@ export const etiquetaSchema = z.object({
     .max(100, 'El nombre no puede superar los 100 caracteres'),
 });
 
-// La línea que evita las "dos verdades": el tipo se deriva del schema,
-// no se vuelve a escribir a mano en el Service.
 export type EtiquetaInput = z.infer<typeof etiquetaSchema>;

@@ -1,8 +1,5 @@
 import { z } from 'zod';
 
-// El body no manda un TipoRestriccion completo: manda { id: number }, y el
-// repository arma la referencia real con getReference(). Zod solo valida
-// que venga ese id, no que el tipo exista (eso lo garantiza la FK en MySQL).
 export const restriccionAlimentariaSchema = z.object({
   tipoRestriccion: z.object({
     id: z.number({ message: 'Debe enviarse un tipo de restricción válido' }).int().positive(),

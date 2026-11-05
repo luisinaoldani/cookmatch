@@ -1,10 +1,8 @@
 import { EtiquetaRepository } from './etiqueta.repository.js';
 import { Etiqueta } from './etiqueta.entity.js';
 import type { EtiquetaInput } from './etiqueta.schema.js';
-import { NotFoundError } from '../shared/errors.js'; //Agrega la importación de NotFoundError desde el archivo de errores compartidos para manejar casos donde una etiqueta no se encuentra en la base de datos.
+import { NotFoundError } from '../shared/errors.js';
 
-// El Service contiene la lógica de negocio y las validaciones.
-// No sabe nada de SQL: le delega todo el acceso a datos al Repository.
 const repository = new EtiquetaRepository();
 
 export class EtiquetaService {
@@ -20,8 +18,6 @@ export class EtiquetaService {
     return etiqueta;
   }
 
-// El shape y el formato de `data` ya los garantizó Zod en el middleware
-// (ver ingrediente.routes.ts): acá solo queda lógica de negocio.
   async create(data: EtiquetaInput): Promise<Etiqueta> {
     const nuevaEtiqueta = new Etiqueta({ nombre: data.nombre });
     return repository.create(nuevaEtiqueta);

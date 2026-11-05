@@ -2,7 +2,7 @@ import { RestriccionAlimentariaRepository } from './restriccion_alimentaria.repo
 import { RestriccionAlimentaria } from './restriccion_alimentaria.entity.js';
 import type { TipoRestriccion } from '../tipo_restriccion/tipo_restriccion.entity.js';
 import type { RestriccionAlimentariaInput } from './restriccion_alimentaria.schema.js';
-import { NotFoundError } from '../shared/errors.js'; //Agrega la importación de NotFoundError desde el archivo de errores compartidos para manejar casos donde una restricción alimentaria no se encuentra en la base de datos.
+import { NotFoundError } from '../shared/errors.js';
 
 const repository = new RestriccionAlimentariaRepository();
 
@@ -21,8 +21,6 @@ export class RestriccionAlimentariaService {
 
   async create(data: RestriccionAlimentariaInput): Promise<RestriccionAlimentaria> {
     const nuevaRestriccion = new RestriccionAlimentaria({
-      // Zod solo garantiza { id: number }; el repository es quien arma la
-      // referencia real con getReference(), así que acá alcanza con el id.
       tipoRestriccion: data.tipoRestriccion as TipoRestriccion,
       nombre: data.nombre,
       descripcion: data.descripcion,

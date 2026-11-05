@@ -1,14 +1,8 @@
 import { MikroORM } from '@mikro-orm/mysql';
 import config from './mikro-orm.config.js';
 
-// Se exporta "let" (no "const") porque se asigna recién dentro de
-// initORM(), una vez que MikroORM.init() resuelve.
 export let orm: MikroORM;
 
-// Si no hay credenciales o la base no está arriba, 
-// el servidor arranca igual y avisa por consola en vez de crashear. 
-// Las rutas que necesiten la base van a fallar recién
-// cuando alguien las use (orm quedará undefined).
 export async function initORM(): Promise<MikroORM | undefined> {
   try {
     orm = await MikroORM.init(config);

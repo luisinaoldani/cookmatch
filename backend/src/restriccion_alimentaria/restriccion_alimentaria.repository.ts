@@ -15,9 +15,6 @@ export class RestriccionAlimentariaRepository {
   }
 
   async create(restriccion: RestriccionAlimentaria): Promise<RestriccionAlimentaria> {
-    // El body solo trae { tipoRestriccion: { id: X }, ... }; getReference()
-    // arma una referencia liviana sin ir a buscar la fila completa. Si el
-    // id no existe, el error aparece recién al hacer flush() (viola la FK).
     const tipoRestriccion = orm.em.getReference(TipoRestriccion, restriccion.tipoRestriccion.id);
     const nueva = orm.em.create(RestriccionAlimentaria, {
       tipoRestriccion,

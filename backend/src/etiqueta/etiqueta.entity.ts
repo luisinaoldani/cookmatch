@@ -1,7 +1,4 @@
 import { Entity, PrimaryKey, Property } from '@mikro-orm/decorators/es';
-
-// La interfaz y el constructor no incluyen el id
-// porque este se genera automáticamente al persistir la entidad
 export interface EtiquetaProps {
   nombre: string;
 }

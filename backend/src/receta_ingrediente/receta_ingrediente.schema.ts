@@ -15,9 +15,6 @@ export const recetaIngredienteCreateSchema = z.object({
     .max(100, 'La unidad de medida no puede superar los 100 caracteres'),
 });
 
-// Al actualizar, idReceta/idIngrediente ya van en la URL; el service actual
-// igual exige `ingrediente` en el body (no cambia la relación, pero valida
-// el shape). Se mantiene ese mismo criterio acá.
 export const recetaIngredienteUpdateSchema = z.object({
   ingrediente: idRef,
   cantidad: z.number({ message: 'La cantidad del ingrediente es obligatoria' }).positive(),

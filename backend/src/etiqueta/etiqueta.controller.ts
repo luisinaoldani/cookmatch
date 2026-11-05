@@ -1,8 +1,6 @@
 import type { Request, Response, NextFunction } from 'express';
 import { EtiquetaService } from './etiqueta.service.js';
 
-// El Controller SOLO se ocupa de: leer el request, llamar al Service,
-// y armar la response. No tiene lógica de negocio ni SQL.
 const service = new EtiquetaService();
 
 export class EtiquetaController {

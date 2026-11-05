@@ -1,7 +1,7 @@
 import { UtensilioRepository } from './utensilio.repository.js';
 import { Utensilio } from './utensilio.entity.js';
 import type { UtensilioInput } from './utensilio.schema.js';
-import { NotFoundError } from '../shared/errors.js'; //Agrega la importación de NotFoundError desde el archivo de errores compartidos para manejar casos donde un utensilio no se encuentra en la base de datos.
+import { NotFoundError } from '../shared/errors.js';
 
 const repository = new UtensilioRepository();
 

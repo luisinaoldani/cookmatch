@@ -1,8 +1,6 @@
 import type { Request, Response, NextFunction } from 'express';
 import type { ZodTypeAny } from 'zod';
 
-// Recibe un esquema y devuelve un middleware: una función de orden superior,
-// como las de la unidad de funciones — pero tipada.
 export function validar(schema: ZodTypeAny) {
   return (req: Request, res: Response, next: NextFunction) => {
     const resultado = schema.safeParse(req.body);
@@ -17,7 +15,7 @@ export function validar(schema: ZodTypeAny) {
       });
     }
 
-    req.body = resultado.data;  // body limpio y validado para el controller
+    req.body = resultado.data;
     next();
   };
 }

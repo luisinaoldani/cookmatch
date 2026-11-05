@@ -6,8 +6,6 @@ import { RestriccionAlimentaria } from '../restriccion_alimentaria/restriccion_a
 import { RecetaIngredienteRepository } from '../receta_ingrediente/receta_ingrediente.repository.js';
 import { PasoRepository } from '../paso/paso.repository.js';
 
-// Acá se devuelve la receta completa: pasos, ingredientes con su Ingrediente, etiquetas, utensilios
-// y restricciones que cumple, porque es lo que se muestra en el detalle.
 const POPULATE = [
   'pasos',
   'ingredientes',
@@ -18,9 +16,6 @@ const POPULATE = [
 ] as const;
 
 export class RecetaRepository {
-  // La receta es la dueña de sus pasos e ingredientes, pero cómo se arma cada
-  // uno (numeración, referencias, diferencias al editar) lo resuelve el
-  // repository de cada entidad. Acá solo se orquestan y se hace el flush().
   private pasoRepository = new PasoRepository();
   private recetaIngredienteRepository = new RecetaIngredienteRepository();
 
@@ -28,12 +23,7 @@ export class RecetaRepository {
     return orm.em.findAll(Receta, { populate: POPULATE });
   }
 
-  // Es un AND: la receta tiene que tener TODAS las etiquetas pedidas.
   async findByEtiquetas(etiquetaIds: number[]): Promise<Receta[]> {
-    // Paso 1: traer los ids de recetas que matchean las N etiquetas. 
-    // Agrupamos por receta y pedimos que la cantidad de etiquetas DISTINTAS que
-    // matchearon sea igual a la cantidad pedida (el largo del arreglo) 
-    // — si le falta una, el conteo da menos y la receta queda afuera.
     const qb = orm.em.createQueryBuilder(Receta, 'r');
     const filas = await qb
       .select('r.id')
@@ -46,13 +36,9 @@ export class RecetaRepository {
     const ids = filas.map((fila: { id: number }) => fila.id);
     if (ids.length === 0) return [];
 
-    // Paso 2: con los ids ya filtrados, traer la receta completa con el
-    // mismo populate que el detalle.
     return orm.em.find(Receta, { id: { $in: ids } }, { populate: POPULATE });
   }
 
-  // Es un AND y un OR: la receta tiene que tener TODAS las restricciones pedidas 
-  // y al menos una de las etiquetas pedidas.
   async findByEtiquetasRestricciones(etiquetaIds: number[], restriccionIds: number[]): Promise<Receta[]> {
     const qb = orm.em.createQueryBuilder(Receta, 'r').select('r.id');
 
@@ -88,15 +74,10 @@ export class RecetaRepository {
     return orm.em.findOne(Receta, { id }, { populate: POPULATE });
   }
 
-  // Sirve para el CUU Planificar comidas de la semana, 
-  // para que no se utilice el findById por cada comida de las 28.
   async findByIds(ids: number[]): Promise<Receta[]> {
     return orm.em.find(Receta, { id: { $in: ids } }, { populate: POPULATE });
   }
 
-  // La receta, sus ingredientes y sus pasos se persisten en un único flush(): MikroORM
-  // lo ejecuta dentro de una transacción, así que si algo falla (por ejemplo
-  // un id de ingrediente inexistente) no queda una receta a medias.
   async create(receta: Receta): Promise<Receta> {
     const nueva = orm.em.create(Receta, {
       nombre: receta.nombre,
@@ -119,11 +100,9 @@ export class RecetaRepository {
     existente.tiempoMin = receta.tiempoMin;
     existente.estado = receta.estado;
     this.setRelacionesMN(existente, receta);
-    // Si el body no trae ingredientes, no se toca lo que la receta ya tiene.
     if (receta.ingredientesInput) {
       await this.recetaIngredienteRepository.reemplazarSinGuardar(existente, receta.ingredientesInput);
     }
-    // Si el body no trae pasos, no se tocan.
     if (receta.pasosInput) {
       await this.pasoRepository.reemplazarSinGuardar(existente, receta.pasosInput);
     }
@@ -139,9 +118,6 @@ export class RecetaRepository {
     return true;
   }
 
-  // .set() reemplaza el contenido completo de la colección M:N por las
-  // referencias nuevas; el ORM calcula solo los INSERT/DELETE que hacen
-  // falta en cada tabla intermedia, no borra y recrea todo.
   private setRelacionesMN(destino: Receta, origen: Receta): void {
     if (origen.etiquetasInput) {
       destino.etiquetas.set(origen.etiquetasInput.map((e) => orm.em.getReference(Etiqueta, e.id)));
